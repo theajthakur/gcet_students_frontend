@@ -1,55 +1,28 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import DataTable from "./DataTable";
 
 export default function UserForm() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState(null);
   const [placeValue, placeValueSet] = useState("Enter Student's Name");
 
-  useEffect(() => {
-    fetch("/galgotia_data.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <div className="LoadScreen">Loading...</div>;
-  if (error) return <div className="ErrorScreen">Error: {error.message}</div>;
-
-  const formHandler = (event) => {
-    const retData = [];
+  const formHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
     let query = userData.query;
     query = query.toUpperCase();
-    switch (userData.type) {
-      case "name":
-        retData.push(data.find((d) => d.Name === query));
-        break;
-      case "adm_no":
-        retData.push(data.find((d) => d.Admission_No === query));
-        break;
 
-      default:
-        break;
-    }
-    if (retData[0]) {
-      console.log(retData[0]);
-    } else {
-      console.log("No Data found");
+    const url = `http://localhost:8000/student/?type=${userData.type}&query=${query}`;
+
+    try {
+      // Send the request
+      const response = await axios.get(url);
+      setFormData(response.data);
+    } catch (error) {
+      // Handle errors
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -63,7 +36,7 @@ export default function UserForm() {
           placeValueSet("Enter Student's Name");
           break;
 
-        case "adm_no":
+        case "admission":
           placeValueSet("Enter Student's Admission Number");
           break;
 
@@ -75,7 +48,7 @@ export default function UserForm() {
     }
   };
 
-  return (
+  const form_d = (
     <div className="container mt-3">
       <div className="row justify-content-center">
         <div className="col-sm-10 col-md-8 col-lg-6">
@@ -92,7 +65,7 @@ export default function UserForm() {
                     onChange={typeSelector}
                   >
                     <option value="name">Student's Name</option>
-                    <option value="adm_no">Admission Number</option>
+                    <option value="admission">Admission Number</option>
                   </select>
                 </div>
                 <div className="form-group">
@@ -108,8 +81,13 @@ export default function UserForm() {
               </form>
             </div>
           </div>
+          <div className="student_table">
+            {formData && <DataTable data={formData} />}
+          </div>
         </div>
       </div>
     </div>
   );
+
+  return form_d;
 }

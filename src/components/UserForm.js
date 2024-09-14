@@ -8,7 +8,7 @@ export default function UserForm() {
   const [placeValue, placeValueSet] = useState("Enter Student's Name");
 
   useEffect(() => {
-    fetch("./public/galgotia_data.json")
+    fetch("/galgotia_data.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -25,14 +25,26 @@ export default function UserForm() {
       });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <div className="LoadScreen">Loading...</div>;
+  if (error) return <div className="ErrorScreen">Error: {error.message}</div>;
 
   const formHandler = (event) => {
+    const retData = [];
     event.preventDefault();
     const formData = new FormData(event.target);
-    console.log(Object.fromEntries(formData));
-    // console.log(data);
+    const userData = Object.fromEntries(formData);
+    const query = userData.query.toUppercase();
+    switch (userData.query) {
+      case "name":
+        retData.push(data.find((d) => d.Name === query));
+        break;
+      case "adm_no":
+        retData.push(data.find((d) => d.Admission_No === query));
+        break;
+
+      default:
+        break;
+    }
   };
 
   const typeSelector = (event) => {
@@ -83,7 +95,7 @@ export default function UserForm() {
                     id="queryBox"
                     name="query"
                     className="form-control"
-                    required="true"
+                    required
                     placeholder={placeValue}
                   ></input>
                 </div>

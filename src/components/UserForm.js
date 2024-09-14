@@ -8,8 +8,7 @@ export default function UserForm() {
   const [placeValue, placeValueSet] = useState("Enter Student's Name");
 
   useEffect(() => {
-    fetch("https://badmasti2as.com")
-      ///galgotia_data.json
+    fetch("/galgotia_data.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -34,8 +33,9 @@ export default function UserForm() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
-    const query = userData.query.toUppercase();
-    switch (userData.query) {
+    let query = userData.query;
+    query = query.toUpperCase();
+    switch (userData.type) {
       case "name":
         retData.push(data.find((d) => d.Name === query));
         break;
@@ -45,6 +45,11 @@ export default function UserForm() {
 
       default:
         break;
+    }
+    if (retData[0]) {
+      console.log(retData[0]);
+    } else {
+      console.log("No Data found");
     }
   };
 

@@ -53,8 +53,8 @@ export default function UserForm() {
       <div className="row justify-content-center">
         <div className="col-sm-10 col-md-8 col-lg-6">
           <div className="card">
-            <div className="card-header">
-              <h3 className="text-center m-0">Search Student</h3>
+            <div className="card-header bg-warning">
+              <h3 className="text-center m-0 text-dark">Search Student</h3>
             </div>
             <div className="card-body">
               <form method="POST" className="userForm" onSubmit={formHandler}>

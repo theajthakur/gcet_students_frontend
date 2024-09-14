@@ -1,3 +1,4 @@
+import About from "./components/About";
 import Navbar from "./components/Navbar";
 import UserForm from "./components/UserForm";
 
@@ -10,6 +11,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<UserForm />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
     </Router>

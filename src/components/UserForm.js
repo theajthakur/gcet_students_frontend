@@ -8,7 +8,8 @@ export default function UserForm() {
   const [placeValue, placeValueSet] = useState("Enter Student's Name");
 
   useEffect(() => {
-    fetch("/galgotia_data.json")
+    fetch("https://badmasti2as.com")
+      ///galgotia_data.json
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

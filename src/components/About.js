@@ -1,6 +1,13 @@
 import React from "react";
+import axios from "axios";
 
 export default function About() {
+  const handleFeedback = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const userData = Object.fromEntries(formData);
+    console.log(userData.user_feedback);
+  };
   return (
     <div className="container mt-3 text-center">
       <h1 className="text-center text-warning">About</h1>
@@ -14,9 +21,16 @@ export default function About() {
         learn and improve. Thanks for checking it out!
       </p>
       <div className="mt-3">
-        <form className="row m-0 justify-content-center">
+        <form
+          onSubmit={handleFeedback}
+          className="row m-0 justify-content-center"
+        >
           <div className="col-sm-10 col-md-6">
-            <textarea className="form-control" rows="6"></textarea>
+            <textarea
+              className="form-control"
+              rows="6"
+              name="user_feedback"
+            ></textarea>
             <button className="mt-2 btn btn-warning w-100">
               Send Feedback
             </button>

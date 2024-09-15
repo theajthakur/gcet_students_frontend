@@ -16,3 +16,7 @@
 .ErrorScreen {
   background-color: red;
 }
+
+.form-group {
+  margin: 10px 0;
+}

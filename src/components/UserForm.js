@@ -79,10 +79,10 @@ export default function UserForm() {
                   ></input>
                 </div>
               </form>
+              <div className="student_table">
+                {formData && <DataTable data={formData} />}
+              </div>
             </div>
-          </div>
-          <div className="student_table">
-            {formData && <DataTable data={formData} />}
           </div>
         </div>
       </div>

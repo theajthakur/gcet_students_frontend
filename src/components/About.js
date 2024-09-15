@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className="container mt-3 text-center">
       <h1 className="text-center text-warning">About</h1>
-      <p>
+      <p className="p-5 bg-light">
         As a first-year student at GCET, I created this site as a way to
         practice and enhance my skills. I’ve built it using ReactJS, ExpressJS,
         NodeJS, and MySQL, and I’ve incorporated Bootstrap to ensure a

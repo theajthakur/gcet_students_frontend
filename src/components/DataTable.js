@@ -21,7 +21,7 @@ const DataTable = ({ data }) => {
   return (
     <div className="container mt-4">
       <div className="table-responsive">
-        <table className="table table-bordered table-striped">
+        <table className="table table-bordered">
           <tbody>{rows}</tbody>
         </table>
       </div>

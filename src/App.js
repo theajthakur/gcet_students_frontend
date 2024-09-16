@@ -11,6 +11,7 @@ import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
 import UserForm from "./components/UserForm";
 import { useAuth } from "./hooks/useAuth";
+import Profile from "./components/Profile";
 
 const App = () => {
   const auth = useAuth();
@@ -49,6 +50,10 @@ const App = () => {
           <Route
             path="/about"
             element={<ProtectedRoute element={<About />} />}
+          />
+          <Route
+            path="/profile"
+            element={<ProtectedRoute element={<Profile />} />}
           />
           <Route path="/login" element={<LoginForm />} />
           <Route

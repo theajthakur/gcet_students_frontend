@@ -19,6 +19,11 @@ export default function Navbar() {
               About
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/profile">
+              Profile
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

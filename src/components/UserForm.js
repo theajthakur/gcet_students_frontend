@@ -15,10 +15,13 @@ export default function UserForm() {
     query = query.toUpperCase();
 
     const url = `http://localhost:8000/student/?type=${userData.type}&query=${query}`;
-
+    const token = localStorage.getItem("token");
     try {
-      // Send the request
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: token, // Include the token in the Authorization header
+        },
+      });
       setFormData(response.data);
     } catch (error) {
       // Handle errors

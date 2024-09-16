@@ -1,27 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [name, setName] = useState("");
   const [father, setFather] = useState("");
   const [admNo, setAdmNo] = useState("");
+  const [error, setError] = useState(""); // State to handle error messages
+  const navigate = useNavigate(); // Hook to programmatically navigate
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const userData = Object.fromEntries(formData);
+
+    // Basic form validation
+    if (!name || !father || !admNo) {
+      setError("All fields are required.");
+      return;
+    }
+
+    const userData = {
+      name,
+      father,
+      adm_no: admNo,
+    };
+
     try {
-      const data = await axios.post("http://localhost:8000/login", userData);
-      const token = data.data.token;
+      const response = await axios.post(
+        "http://localhost:8000/login",
+        userData
+      );
+      const { token } = response.data;
+
       if (token) {
-        localStorage.setItem("token", "Bearer " + token);
+        localStorage.setItem("token", token); // Store token without 'Bearer' prefix
+        navigate("/students"); // Redirect to a protected route upon successful login
       } else {
-        console.log(data);
+        setError("Failed to login. Please try again.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Login error:", error);
+      setError("An error occurred. Please try again later.");
     }
   };
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="row w-100 justify-content-center">
@@ -31,6 +52,8 @@ export default function LoginForm() {
               <h3 className="m-0 text-center">Login</h3>
             </div>
             <div className="card-body">
+              {error && <div className="alert alert-danger">{error}</div>}{" "}
+              {/* Display error messages */}
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
@@ -42,6 +65,7 @@ export default function LoginForm() {
                     className="form-control"
                     id="name"
                     placeholder="Enter your name"
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -54,10 +78,11 @@ export default function LoginForm() {
                     className="form-control"
                     id="admissionNumber"
                     placeholder="Enter admission number"
+                    required
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="fatherName">Father Name</label>
+                  <label htmlFor="fatherName">Father's Name</label>
                   <input
                     value={father}
                     onChange={(e) => setFather(e.target.value)}
@@ -65,7 +90,8 @@ export default function LoginForm() {
                     name="father"
                     className="form-control"
                     id="fatherName"
-                    placeholder="Enter father’s name"
+                    placeholder="Enter father's name"
+                    required
                   />
                 </div>
                 <button type="submit" className="btn w-100 btn btn-info">

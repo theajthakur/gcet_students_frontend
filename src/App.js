@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import About from "./components/About";
 import LoginForm from "./components/LoginForm";
@@ -11,20 +12,15 @@ import Navbar from "./components/Navbar";
 import UserForm from "./components/UserForm";
 import { useAuth } from "./hooks/useAuth";
 
-const ProtectedRoute = ({ element }) => {
-  const auth = useAuth();
-
-  if (auth === null) {
-    return <div>Loading...</div>;
-  }
-
-  return auth ? element : <Navigate to="/login" />;
-};
-
-function App() {
+const App = () => {
   const auth = useAuth();
   const token = localStorage.getItem("token");
-  const shouldShowNavbar = window.location.pathname !== "/login";
+
+  // Show Navbar on all routes except /login
+  const ShowNavbar = () => {
+    const location = useLocation();
+    return location.pathname !== "/login" ? <Navbar /> : null;
+  };
 
   if (auth === null) {
     // Show a loading spinner or similar while checking auth status
@@ -44,7 +40,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {shouldShowNavbar && <Navbar />}
+        <ShowNavbar />
         <Routes>
           <Route
             path="/students"
@@ -63,6 +59,17 @@ function App() {
       </div>
     </Router>
   );
-}
+};
+
+// Component to protect routes
+const ProtectedRoute = ({ element }) => {
+  const auth = useAuth();
+
+  if (auth === null) {
+    return <div>Loading...</div>;
+  }
+
+  return auth ? element : <Navigate to="/login" />;
+};
 
 export default App;

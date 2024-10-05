@@ -9,9 +9,10 @@ import {
 import About from "./components/About";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
-import UserForm from "./components/UserForm";
+import Feeds from "./components/feeds";
 import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
+import Search from "./components/Search";
 
 const App = () => {
   const auth = useAuth();
@@ -44,8 +45,8 @@ const App = () => {
         <ShowNavbar />
         <Routes>
           <Route
-            path="/students"
-            element={<ProtectedRoute element={<UserForm />} />}
+            path="/feeds"
+            element={<ProtectedRoute element={<Feeds />} />}
           />
           <Route
             path="/about"
@@ -54,6 +55,10 @@ const App = () => {
           <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}
+          />
+          <Route
+            path="/search"
+            element={<ProtectedRoute element={<Search />} />}
           />
           <Route path="/login" element={<LoginForm />} />
           <Route

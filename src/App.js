@@ -13,6 +13,7 @@ import Feeds from "./components/feeds";
 import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
+import UserProfile from "./components/UserProfile";
 
 const App = () => {
   const auth = useAuth();
@@ -59,6 +60,10 @@ const App = () => {
           <Route
             path="/search"
             element={<ProtectedRoute element={<Search />} />}
+          />
+          <Route
+            path="/search/:id"
+            element={<ProtectedRoute element={<UserProfile />} />}
           />
           <Route path="/login" element={<LoginForm />} />
           <Route

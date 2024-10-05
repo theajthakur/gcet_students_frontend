@@ -10,8 +10,8 @@ export default function Navbar() {
         </Link>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link className="nav-link" aria-current="page" to="/students">
-              Students
+            <Link className="nav-link" aria-current="page" to="/search">
+              Search
             </Link>
           </li>
           <li className="nav-item">

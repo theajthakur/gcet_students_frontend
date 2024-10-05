@@ -33,7 +33,7 @@ export default function LoginForm() {
 
       if (token) {
         localStorage.setItem("token", token); // Store token without 'Bearer' prefix
-        navigate("/students"); // Redirect to a protected route upon successful login
+        navigate("/feeds"); // Redirect to a protected route upon successful login
       } else {
         setError("Failed to login. Please try again.");
       }

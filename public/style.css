@@ -20,3 +20,13 @@
 .form-group {
   margin: 10px 0;
 }
+
+.user_suggested .user_entity {
+  transition: 0.2s;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 #0000002e;
+}
+
+.user_suggested .user_entity:hover {
+  box-shadow: 0px 2px 10px 1px #0000002e;
+}

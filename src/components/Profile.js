@@ -1,13 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 export default function Profile() {
+  const token = localStorage.getItem("token");
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState({
-    mobile: 9695146906,
-    email: "thakurvijayofficial@gmail.com",
+    mobile: "",
+    email: "",
   });
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await fetch("http://localhost:8000/user/profile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+        const result = await response.json();
+        if (response.ok) {
+          // Update profile state with the fetched data
+          setProfile({
+            mobile: result.mobile,
+            email: result.email,
+          });
+        } else {
+          console.error("Error fetching profile:", result);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
   const updateProfile = async (event) => {
     event.preventDefault();
     const formData = {
@@ -15,8 +45,6 @@ export default function Profile() {
       email: profile.email,
       profile: profile.profile,
     };
-
-    const token = localStorage.getItem("token");
     try {
       const response = await fetch("http://localhost:8000/user/profile", {
         method: "POST",
@@ -36,7 +64,7 @@ export default function Profile() {
         console.error("Error updating profile:", result);
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Something went wrong!");
     }
   };
 

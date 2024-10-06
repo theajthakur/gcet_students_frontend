@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "./loader";
+import FourZeroFour from "./FourZeroFour";
 export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
@@ -40,24 +41,25 @@ export default function UserProfile() {
           search_history = JSON.parse(localStorage.getItem("search_history"));
         }
 
-        // Check if the result.name is not already in search_history
-        if (!search_history.some((d) => d.name === result.name)) {
-          // Create a new entry object
-          const tmp = {
-            name: result.name,
-            sr_no: result.sr_no,
-            branch: result.branch,
-            section: result.section,
-          };
+        if (result) {
+          if (!search_history.some((d) => d.name === result.name)) {
+            // Create a new entry object
+            const tmp = {
+              name: result.name,
+              sr_no: result.sr_no,
+              branch: result.branch,
+              section: result.section,
+            };
 
-          // Push the new entry into the search_history array
-          search_history.push(tmp);
+            // Push the new entry into the search_history array
+            search_history.push(tmp);
 
-          // Store the updated array back into localStorage as a string
-          localStorage.setItem(
-            "search_history",
-            JSON.stringify(search_history)
-          );
+            // Store the updated array back into localStorage as a string
+            localStorage.setItem(
+              "search_history",
+              JSON.stringify(search_history)
+            );
+          }
         }
 
         setUser(result); // Set the user data in state
@@ -74,7 +76,7 @@ export default function UserProfile() {
   if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>; // Show error message
 
-  return (
+  return user ? (
     <div className="container my-4">
       <div className="d-md-flex text-center text-md-start">
         <div className="px-5 justify-content-center align-items-center h-100">
@@ -161,5 +163,7 @@ export default function UserProfile() {
         </div>
       </div>
     </div>
+  ) : (
+    <FourZeroFour />
   );
 }

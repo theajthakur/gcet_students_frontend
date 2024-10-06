@@ -14,6 +14,7 @@ import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
 import UserProfile from "./components/UserProfile";
+import Loader from "./components/loader";
 
 const App = () => {
   const auth = useAuth();
@@ -26,8 +27,7 @@ const App = () => {
   };
 
   if (auth === null) {
-    // Show a loading spinner or similar while checking auth status
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   // Redirect to login if no token is found and the current path is not '/login'
@@ -68,7 +68,7 @@ const App = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route
             path="*"
-            element={<Navigate to={token ? "/students" : "/login"} />}
+            element={<Navigate to={token ? "/feeds" : "/login"} />}
           />
         </Routes>
       </div>
@@ -81,7 +81,7 @@ const ProtectedRoute = ({ element }) => {
   const auth = useAuth();
 
   if (auth === null) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return auth ? element : <Navigate to="/login" />;

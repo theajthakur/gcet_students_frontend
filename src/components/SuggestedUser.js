@@ -27,7 +27,7 @@ export default function SuggestedUser(props) {
         : JSON.parse(localStorage.search_history).map((user) => (
             <div
               key={user.sr_no}
-              className="user_entity d-flex rounded bg-white mb-2"
+              className="user_entity d-flex rounded recent_result mb-2"
               style={{ position: "relative" }}
             >
               <div className="profile_pic p-1">

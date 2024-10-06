@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import Loader from "./loader";
 export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
@@ -71,12 +71,12 @@ export default function UserProfile() {
     fetchUser(); // Call the function to fetch user data
   }, [id]); // Dependency array to refetch if ID changes
 
-  if (loading) return <div>Loading...</div>; // Show loading state
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>; // Show error message
 
   return (
     <div className="container my-4">
-      <div className="d-flex">
+      <div className="d-md-flex text-center text-md-start">
         <div className="px-5 justify-content-center align-items-center h-100">
           <img
             src={user.profile_pic || "/image/profile_pic/user.jpg"} // Default image if profile_pic is null
@@ -98,6 +98,66 @@ export default function UserProfile() {
           >
             {connection === true ? "Connected" : "+ Ask Connection"}
           </button>
+        </div>
+      </div>
+      <br />
+      <br />
+      <hr />
+      <div className="user_posts p-2">
+        <div className="row">
+          <div className="col-md-4 mb-3">
+            <div className="card bg-white p-2 h-100">
+              <div className="user-content p-2">
+                <p className="m-0">
+                  Celebrating Durga Puja, First day at Dandiya Night.....
+                </p>
+              </div>
+              <div className="hashtags">
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #DurgaPuja24
+                </span>
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #DandiyaNight
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4 mb-3">
+            <div className="card bg-white p-2 h-100">
+              <div className="user-content p-2">
+                <p className="m-0">
+                  Barely completed one month in the College and here CAE-1 Exam
+                  starts
+                </p>
+              </div>
+              <div className="hashtags">
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #Exams
+                </span>
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #GalgotiasCollege
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4 mb-3">
+            <div className="card bg-white p-2 h-100">
+              <div className="user-content p-2">
+                <p className="m-0">
+                  Admission confirmed for 2024-2028 for B-Tech (CSE) in Galgotia
+                  College, Greater Noida. Alloted with B2 Section....
+                </p>
+              </div>
+              <div className="hashtags">
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #Galgotias
+                </span>
+                <span className="px-2 me-2 bg-light d-inline-block">
+                  #Noida
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

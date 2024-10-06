@@ -15,6 +15,9 @@ import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
 import UserProfile from "./components/UserProfile";
 import Loader from "./components/loader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./App.css";
 const App = () => {
   const auth = useAuth();
@@ -71,6 +74,7 @@ const App = () => {
             element={<Navigate to={token ? "/feeds" : "/login"} />}
           />
         </Routes>
+        <ToastContainer />
       </div>
     </Router>
   );

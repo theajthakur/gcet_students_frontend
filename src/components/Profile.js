@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   const [show, setShow] = useState(false);
@@ -27,11 +28,9 @@ export default function Profile() {
       });
 
       const result = await response.json();
-      console.log("Response from server:", result);
-
       if (response.ok) {
-        // Handle successful response
-        console.log("Profile updated successfully.");
+        toast.success("Profile Updated!");
+        setShow(false);
       } else {
         // Handle errors
         console.error("Error updating profile:", result);

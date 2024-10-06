@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { FaHistory, FaTimes } from "react-icons/fa";
 
 export default function SuggestedUser(props) {
+  if (!localStorage.search_history) {
+    localStorage.setItem("search_history", JSON.stringify([]));
+  }
   const [userList, setUserList] = useState(
     JSON.parse(localStorage.search_history)
   );
@@ -13,9 +16,10 @@ export default function SuggestedUser(props) {
   };
   const users = props.users;
   return (
-    <div className="user_suggested">
-      {users.length > 0
-        ? users.map((user) => (
+    <>
+      <div className="user_suggested">
+        {users.length > 0 ? (
+          users.map((user) => (
             <div
               key={user.sr_no}
               className="user_entity d-flex rounded bg-white mb-2"
@@ -33,8 +37,8 @@ export default function SuggestedUser(props) {
               </div>
             </div>
           ))
-        : localStorage.search_history
-        ? userList.map((user) => (
+        ) : userList.length > 0 ? (
+          userList.map((user) => (
             <div
               key={user.sr_no}
               className="user_entity d-flex rounded recent_result mb-2"
@@ -64,7 +68,15 @@ export default function SuggestedUser(props) {
               </div>
             </div>
           ))
-        : localStorage.setItem("search_history", [])}
-    </div>
+        ) : (
+          <>
+            {localStorage.setItem("search_history", [])}
+            <div className="alert alert-warning text-center">
+              <p className="m-0">Search By Name or Admission Number</p>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }

@@ -3,11 +3,14 @@ import Feeds from "./feeds";
 import SuggestedUser from "./SuggestedUser";
 export default function Search() {
   const [users, setUsers] = useState([]);
+  const [loading, setloading] = useState(true);
+
   const userSearch = async (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value.trim();
     const token = localStorage.token;
     if (username.length >= 4) {
+      setloading(true);
       const response = await fetch(
         "http://localhost:8000/student/?type=name&query=" + username,
         {
@@ -21,6 +24,7 @@ export default function Search() {
       // Read the response body once and store it
       const result = await response.json();
       setUsers(result);
+      setloading(false);
       event.preventDefault();
     }
   };
@@ -40,6 +44,7 @@ export default function Search() {
               />
             </form>
             <hr />
+            <div class={loading ? "hor_loader" : "d-none"}></div>
             <SuggestedUser users={users} />
           </div>
         </div>

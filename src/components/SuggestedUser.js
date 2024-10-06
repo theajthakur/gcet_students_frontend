@@ -24,7 +24,8 @@ export default function SuggestedUser(props) {
               </div>
             </div>
           ))
-        : JSON.parse(localStorage.search_history).map((user) => (
+        : localStorage.search_history
+        ? JSON.parse(localStorage.search_history).map((user) => (
             <div
               key={user.sr_no}
               className="user_entity d-flex rounded recent_result mb-2"
@@ -42,7 +43,8 @@ export default function SuggestedUser(props) {
                 </p>
               </div>
             </div>
-          ))}
+          ))
+        : localStorage.setItem("search_history", [])}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Feeds from "./feeds";
 import SuggestedUser from "./SuggestedUser";
 export default function Search() {
   const [users, setUsers] = useState([]);
-  const [loading, setloading] = useState(true);
+  const [loading, setloading] = useState(false);
 
   const userSearch = async (event) => {
     event.preventDefault();

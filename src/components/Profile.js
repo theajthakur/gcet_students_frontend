@@ -3,7 +3,7 @@ import React from "react";
 export default function Profile() {
   return (
     <div className="mt-5">
-      <div className="profileContainer row justify-content-center">
+      <div className="profileContainer row justify-content-center m-0">
         <div className="col-md-8 col-lg-6">
           <div className="card py-2 bg-light">
             <div className="row d-flex align-items-center justify-content-center px-2">

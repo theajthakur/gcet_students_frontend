@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHistory, FaTimes } from "react-icons/fa";
 
 export default function SuggestedUser(props) {
+  const [userList, setUserList] = useState(
+    JSON.parse(localStorage.search_history)
+  );
+  const handleDelete = (id) => {
+    const updatedUsers = userList.filter((user) => user.sr_no !== id);
+    setUserList(updatedUsers);
+    localStorage.setItem("search_history", JSON.stringify(updatedUsers));
+  };
   const users = props.users;
   return (
     <div className="user_suggested">
@@ -26,7 +34,7 @@ export default function SuggestedUser(props) {
             </div>
           ))
         : localStorage.search_history
-        ? JSON.parse(localStorage.search_history).map((user) => (
+        ? userList.map((user) => (
             <div
               key={user.sr_no}
               className="user_entity d-flex rounded recent_result mb-2"
@@ -47,7 +55,10 @@ export default function SuggestedUser(props) {
                 <p className="m-0 icon_papa h-50 d-flex align-items-center">
                   <FaHistory />
                 </p>
-                <p className="m-0 icon_papa h-50 d-flex text-danger align-items-center">
+                <p
+                  onClick={() => handleDelete(user.sr_no)}
+                  className="m-0 icon_papa h-50 d-flex text-danger align-items-center"
+                >
                   <FaTimes />
                 </p>
               </div>

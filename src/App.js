@@ -6,16 +6,16 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+import Search from "./components/search";
 import About from "./components/About";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
 import Feeds from "./components/feeds";
 import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
-import Search from "./components/Search";
 import UserProfile from "./components/UserProfile";
 import Loader from "./components/loader";
-
+import "./App.css";
 const App = () => {
   const auth = useAuth();
   const token = localStorage.getItem("token");

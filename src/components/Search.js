@@ -25,7 +25,7 @@ export default function Search() {
     }
   };
   return (
-    <div className="container-fluid vh-100">
+    <div className="container-fluid ">
       <div className="row h-100">
         <div className="col-md-4 col-xl-3">
           <div className="p-2 bg-light h-100">

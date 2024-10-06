@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "./loader";
+import { FaCheck, FaPlus } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
 export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
@@ -98,7 +99,15 @@ export default function UserProfile() {
             } py-1 px-2`}
             onClick={connectionRequest}
           >
-            {connection === true ? "Connected" : "+ Ask Connection"}
+            {connection === true ? (
+              <>
+                <FaCheck className="icon" /> Connected
+              </>
+            ) : (
+              <>
+                <FaPlus className="icon" /> Ask Connection
+              </>
+            )}
           </button>
         </div>
       </div>

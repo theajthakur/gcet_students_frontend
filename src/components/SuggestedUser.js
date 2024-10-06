@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHistory } from "react-icons/fa";
+import { FaHistory, FaTimes } from "react-icons/fa";
 
 export default function SuggestedUser(props) {
   const users = props.users;
@@ -43,9 +43,12 @@ export default function SuggestedUser(props) {
                   {user.branch} - {user.section}
                 </p>
               </div>
-              <div className="meta_details ms-auto text-secondary opacity-50 align-items-center pe-2">
-                <p className="icon_papa h-100 d-flex align-items-center">
+              <div className="meta_details ms-auto text-secondary opacity-25 align-items-center pe-2">
+                <p className="m-0 icon_papa h-50 d-flex align-items-center">
                   <FaHistory />
+                </p>
+                <p className="m-0 icon_papa h-50 d-flex text-danger align-items-center">
+                  <FaTimes />
                 </p>
               </div>
             </div>

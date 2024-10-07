@@ -44,7 +44,7 @@ export default function Search() {
               />
             </form>
             <hr />
-            <div class={loading ? "hor_loader" : "d-none"}></div>
+            <div className={loading ? "hor_loader" : "d-none"}></div>
             <SuggestedUser users={users} />
           </div>
         </div>

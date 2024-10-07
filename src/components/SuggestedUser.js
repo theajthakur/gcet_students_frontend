@@ -9,6 +9,7 @@ export default function SuggestedUser(props) {
   const [userList, setUserList] = useState(
     JSON.parse(localStorage.search_history)
   );
+  const userListRev = userList.reverse();
   const handleDelete = (id) => {
     const updatedUsers = userList.filter((user) => user.sr_no !== id);
     setUserList(updatedUsers);
@@ -29,7 +30,9 @@ export default function SuggestedUser(props) {
               </div>
               <div className="user_detail p-1">
                 <h6 className="m-0">
-                  <Link to={`/search/${user.sr_no}`}>{user.name}</Link>
+                  <Link to={`/search/${user.sr_no}`} state={{ fromLink: true }}>
+                    {user.name}
+                  </Link>
                 </h6>
                 <p className="m-0">
                   {user.branch} - {user.section}
@@ -38,7 +41,7 @@ export default function SuggestedUser(props) {
             </div>
           ))
         ) : userList.length > 0 ? (
-          userList.map((user) => (
+          userListRev.map((user) => (
             <div
               key={user.sr_no}
               className="user_entity d-flex rounded recent_result mb-2"

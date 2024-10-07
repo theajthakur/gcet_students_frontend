@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Loader from "./loader";
 import { FaCheck, FaPlus } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
 export default function UserProfile() {
+  const location = useLocation();
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
 
@@ -44,22 +45,23 @@ export default function UserProfile() {
 
         if (result) {
           if (!search_history.some((d) => d.name === result.name)) {
-            // Create a new entry object
-            const tmp = {
-              name: result.name,
-              sr_no: result.sr_no,
-              branch: result.branch,
-              section: result.section,
-            };
+            if (location.state && location.state.fromLink) {
+              const tmp = {
+                name: result.name,
+                sr_no: result.sr_no,
+                branch: result.branch,
+                section: result.section,
+              };
 
-            // Push the new entry into the search_history array
-            search_history.push(tmp);
+              // Push the new entry into the search_history array
+              search_history.push(tmp);
 
-            // Store the updated array back into localStorage as a string
-            localStorage.setItem(
-              "search_history",
-              JSON.stringify(search_history)
-            );
+              // Store the updated array back into localStorage as a string
+              localStorage.setItem(
+                "search_history",
+                JSON.stringify(search_history)
+              );
+            }
           }
         }
 
@@ -72,7 +74,7 @@ export default function UserProfile() {
     };
 
     fetchUser(); // Call the function to fetch user data
-  }, [id]); // Dependency array to refetch if ID changes
+  }, [id, location.state]); // Dependency array to refetch if ID changes
 
   if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>; // Show error message

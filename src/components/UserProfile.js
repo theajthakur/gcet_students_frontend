@@ -1,26 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Loader from "./loader";
+import { toast } from "react-toastify";
 import { FaCheck, FaPlus } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
 export default function UserProfile() {
   const location = useLocation();
+  const token = localStorage.token;
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
 
   const [connection, setConnection] = useState(false);
   const [loading, setLoading] = useState(true); // State to handle loading state
   const [error, setError] = useState(null); // State to handle errors
-  function connectionRequest() {
+  async function connectionRequest() {
     if (connection) {
-      setConnection(false);
+      try {
+        const response = await fetch(`http://localhost:8000/follow/remove/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ following: id }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          toast.success(result.message);
+          setConnection(false);
+        } else {
+          toast.error(result.error);
+          console.error(result.error);
+        }
+      } catch (error) {
+        console.error("Failed in Unfollowing:", error);
+      }
     } else {
-      setConnection(true);
+      try {
+        const response = await fetch(`http://localhost:8000/follow/request/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ following: id }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          toast.success(result.message);
+          setConnection(true);
+        } else {
+          toast.error(result.error);
+          console.error(result.error);
+        }
+      } catch (error) {
+        console.error("Error sending follow request:", error);
+      }
     }
   }
   useEffect(() => {
+    const token = localStorage.token;
     const fetchUser = async () => {
-      const token = localStorage.token;
       try {
         const response = await fetch(`http://localhost:8000/student/${id}`, {
           method: "GET",
@@ -33,7 +77,11 @@ export default function UserProfile() {
           throw new Error("Failed to fetch user data");
         }
 
-        const result = await response.json();
+        const result_t = await response.json();
+        const result = result_t.student;
+        if (result.follow) {
+          setConnection(true);
+        }
         // Initialize search_history as an empty array
         let search_history = [];
 

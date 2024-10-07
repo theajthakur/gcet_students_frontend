@@ -74,7 +74,7 @@ const App = () => {
             element={<Navigate to={token ? "/feeds" : "/login"} />}
           />
         </Routes>
-        <ToastContainer />
+        <ToastContainer position="bottom-right" />
       </div>
     </Router>
   );

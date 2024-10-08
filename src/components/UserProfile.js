@@ -64,7 +64,7 @@ export default function UserProfile() {
           headers: { Authorization: token },
         });
 
-        if (!response.ok) throw new Error("Failed to fetch user data");
+        if (!response.ok) return <FourZeroFour />;
 
         const result_t = await response.json();
         const result = result_t.student;

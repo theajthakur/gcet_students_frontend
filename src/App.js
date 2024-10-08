@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Search from "./components/search";
 import About from "./components/About";
@@ -23,6 +24,7 @@ import "./App.css";
 const App = () => {
   const auth = useAuth();
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   // Show Navbar on all routes except /login
   const ShowNavbar = () => {
@@ -30,54 +32,49 @@ const App = () => {
     return location.pathname !== "/login" ? <Navbar /> : null;
   };
 
+  useEffect(() => {
+    // Redirect to login if no token is found and the current path is not '/login'
+    if (!token && window.location.pathname !== "/login") {
+      navigate("/login");
+    }
+  }, [token, navigate]);
+
   if (auth === null) {
     return <Loader />;
   }
 
-  // Redirect to login if no token is found and the current path is not '/login'
-  if (!token && window.location.pathname !== "/login") {
-    return (
-      <div>
-        You are not logged in. Please <a href="/login">Login</a> to proceed
-        further.
-      </div>
-    );
-  }
-
   return (
-    <Router>
-      <div className="App">
-        <ShowNavbar />
-        <Routes>
-          <Route
-            path="/feeds"
-            element={<ProtectedRoute element={<Feeds />} auth={auth} />}
-          />
-          <Route
-            path="/about"
-            element={<ProtectedRoute element={<About />} auth={auth} />}
-          />
-          <Route
-            path="/profile"
-            element={<ProtectedRoute element={<Profile />} auth={auth} />}
-          />
-          <Route
-            path="/search"
-            element={<ProtectedRoute element={<Search />} auth={auth} />}
-          />
-          <Route
-            path="/search/:id"
-            element={<ProtectedRoute element={<UserProfile />} auth={auth} />}
-          />
-          <Route path="/login" element={<LoginForm />} />
-          <Route
-            path="*"
-            element={<Navigate to={token ? "/feeds" : "/login"} />}
-          />
-        </Routes>
-        <ToastContainer position="bottom-right" />
-      </div>
-    </Router>
+    <div className="App">
+      <ShowNavbar />
+      <Routes>
+        <Route
+          path="/feeds"
+          element={<ProtectedRoute element={<Feeds />} auth={auth} />}
+        />
+        <Route
+          path="/about"
+          element={<ProtectedRoute element={<About />} auth={auth} />}
+        />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} auth={auth} />}
+        />
+        <Route
+          path="/search"
+          element={<ProtectedRoute element={<Search />} auth={auth} />}
+        />
+        <Route
+          path="/search/:id"
+          element={<ProtectedRoute element={<UserProfile />} auth={auth} />}
+        />
+        <Route path="/login" element={<LoginForm />} />
+        <Route
+          path="*"
+          element={<Navigate to={token ? "/feeds" : "/login"} />}
+        />
+      </Routes>
+      <ToastContainer position="bottom-right" />
+    </div>
   );
 };
 
@@ -90,4 +87,12 @@ const ProtectedRoute = ({ element, auth }) => {
   return auth ? element : <Navigate to="/login" />;
 };
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+};
+
+export default AppWrapper;

@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-
+import Loader from "./loader";
 export default function LoginForm() {
   const [name, setName] = useState("");
   const [father, setFather] = useState("");
   const [admNo, setAdmNo] = useState("");
-  const [error, setError] = useState(""); // State to handle error messages
-  const navigate = useNavigate(); // Hook to programmatically navigate
-
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const auth = useAuth();
+  if (auth) {
+    navigate("/profile");
+    return <Loader />;
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -29,11 +34,12 @@ export default function LoginForm() {
         "http://localhost:8000/login",
         userData
       );
-      const { token } = response.data;
 
+      const { token } = response.data;
       if (token) {
-        localStorage.setItem("token", token); // Store token without 'Bearer' prefix
-        navigate("/feeds"); // Redirect to a protected route upon successful login
+        localStorage.setItem("token", token);
+        console.log("Token saved:", token);
+        window.location.href = "/feeds";
       } else {
         setError("Failed to login. Please try again.");
       }

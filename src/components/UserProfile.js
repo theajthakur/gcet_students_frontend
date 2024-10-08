@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Loader from "./loader";
 import { toast } from "react-toastify";
-import { FaCheck, FaPlus } from "react-icons/fa";
+import { FaCheck, FaUserMinus, FaPlus } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
 export default function UserProfile() {
   const location = useLocation();
@@ -10,11 +10,11 @@ export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
 
-  const [connection, setConnection] = useState(false);
+  const [connection, setConnection] = useState("nofollow");
   const [loading, setLoading] = useState(true); // State to handle loading state
   const [error, setError] = useState(null); // State to handle errors
   async function connectionRequest() {
-    if (connection) {
+    if (connection === "follow" || connection === "requested") {
       try {
         const response = await fetch(`http://localhost:8000/follow/remove/`, {
           method: "POST",
@@ -29,7 +29,7 @@ export default function UserProfile() {
 
         if (response.ok && result.success) {
           toast.success(result.message);
-          setConnection(false);
+          setConnection("nofollow");
         } else {
           toast.error(result.error);
           console.error(result.error);
@@ -52,7 +52,7 @@ export default function UserProfile() {
 
         if (response.ok && result.success) {
           toast.success(result.message);
-          setConnection(true);
+          setConnection("requested");
         } else {
           toast.error(result.error);
           console.error(result.error);
@@ -79,8 +79,12 @@ export default function UserProfile() {
 
         const result_t = await response.json();
         const result = result_t.student;
-        if (result.follow) {
-          setConnection(true);
+        if (result.follow === "followed") {
+          setConnection("follow");
+        } else if (result.follow === "requested") {
+          setConnection("requested");
+        } else {
+          setConnection("nofollow");
         }
         // Initialize search_history as an empty array
         let search_history = [];
@@ -145,13 +149,21 @@ export default function UserProfile() {
           <p className="m-0 mb-1">56 Connections</p>
           <button
             className={`btn btn-${
-              connection === true ? "success" : "secondary"
+              connection === "follow"
+                ? "success"
+                : connection === "requested"
+                ? "warning"
+                : "secondary"
             } py-1 px-2`}
             onClick={connectionRequest}
           >
-            {connection === true ? (
+            {connection === "follow" ? (
               <>
                 <FaCheck className="icon" /> Connected
+              </>
+            ) : connection === "requested" ? (
+              <>
+                <FaUserMinus className="icon" /> Requested
               </>
             ) : (
               <>

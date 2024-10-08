@@ -147,7 +147,14 @@ export default function UserProfile() {
           />
         </div>
         <div className="px-5">
-          <h3 className="text-secondary">{user.name}</h3>
+          <h3 className="text-secondary">
+            {user.name}{" "}
+            {user.verified ? (
+              <FaCheck className="icon text-success small opacity-50" />
+            ) : (
+              ""
+            )}
+          </h3>
           <p className="m-0">
             {user.branch} - {user.section}
           </p>

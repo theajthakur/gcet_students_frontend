@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({
     mobile: "",
     email: "",
@@ -81,6 +83,11 @@ export default function Profile() {
   }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    toast.warn("Successfully Logout");
+    navigate("/login");
+  };
   return (
     <>
       <div className="mt-5">
@@ -126,10 +133,14 @@ export default function Profile() {
                     </table>
                   </div>
                   <div className="d-flex justify-content-between mt-3">
-                    <button className="btn btn-warning w-100 me-2">
+                    <button
+                      onClick={handleShow}
+                      className="btn btn-warning w-100 me-2"
+                    >
                       Update Profile
                     </button>
                     <button
+                      onClick={handleLogOut}
                       className="btn btn-danger"
                       style={{ minWidth: "50px" }}
                     >

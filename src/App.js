@@ -16,7 +16,7 @@ import { useAuth } from "./hooks/useAuth";
 import Profile from "./components/Profile";
 import UserProfile from "./components/UserProfile";
 import Loader from "./components/loader";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
@@ -35,6 +35,7 @@ const App = () => {
   useEffect(() => {
     // Redirect to login if no token is found and the current path is not '/login'
     if (!token && window.location.pathname !== "/login") {
+      toast.warn("Login Please!");
       navigate("/login");
     }
   }, [token, navigate]);
@@ -83,7 +84,6 @@ const ProtectedRoute = ({ element, auth }) => {
   if (auth === null) {
     return <Loader />;
   }
-
   return auth ? element : <Navigate to="/login" />;
 };
 

@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+
 const App = () => {
   const auth = useAuth();
   const token = localStorage.getItem("token");
@@ -50,23 +51,23 @@ const App = () => {
         <Routes>
           <Route
             path="/feeds"
-            element={<ProtectedRoute element={<Feeds />} />}
+            element={<ProtectedRoute element={<Feeds />} auth={auth} />}
           />
           <Route
             path="/about"
-            element={<ProtectedRoute element={<About />} />}
+            element={<ProtectedRoute element={<About />} auth={auth} />}
           />
           <Route
             path="/profile"
-            element={<ProtectedRoute element={<Profile />} />}
+            element={<ProtectedRoute element={<Profile />} auth={auth} />}
           />
           <Route
             path="/search"
-            element={<ProtectedRoute element={<Search />} />}
+            element={<ProtectedRoute element={<Search />} auth={auth} />}
           />
           <Route
             path="/search/:id"
-            element={<ProtectedRoute element={<UserProfile />} />}
+            element={<ProtectedRoute element={<UserProfile />} auth={auth} />}
           />
           <Route path="/login" element={<LoginForm />} />
           <Route
@@ -81,9 +82,7 @@ const App = () => {
 };
 
 // Component to protect routes
-const ProtectedRoute = ({ element }) => {
-  const auth = useAuth();
-
+const ProtectedRoute = ({ element, auth }) => {
   if (auth === null) {
     return <Loader />;
   }

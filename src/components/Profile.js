@@ -149,7 +149,7 @@ export default function Profile() {
                 className="form-control"
                 placeholder="Your Mobile Number"
                 onChange={updateVal}
-                value={profile.mobile}
+                value={profile.mobile ? profile.mobile : ""}
               />
             </div>
             <div className="form-group">
@@ -159,7 +159,7 @@ export default function Profile() {
                 className="form-control"
                 placeholder="Your Email Address"
                 onChange={updateVal}
-                value={profile.email}
+                value={profile.email ? profile.email : ""}
               />
             </div>
             <button className="btn btn-warning w-100">Save</button>

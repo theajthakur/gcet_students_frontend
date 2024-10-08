@@ -10,6 +10,7 @@ export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
 
+  const [self, setSelf] = useState(false);
   const [connection, setConnection] = useState("nofollow");
   const [loading, setLoading] = useState(true); // State to handle loading state
   const [error, setError] = useState(null); // State to handle errors
@@ -79,6 +80,10 @@ export default function UserProfile() {
 
         const result_t = await response.json();
         const result = result_t.student;
+
+        if (result.self) {
+          setSelf(true);
+        }
         if (result.follow === "followed") {
           setConnection("follow");
         } else if (result.follow === "requested") {
@@ -147,30 +152,34 @@ export default function UserProfile() {
             {user.branch} - {user.section}
           </p>
           <p className="m-0 mb-1">56 Connections</p>
-          <button
-            className={`btn btn-${
-              connection === "follow"
-                ? "success"
-                : connection === "requested"
-                ? "warning"
-                : "secondary"
-            } py-1 px-2`}
-            onClick={connectionRequest}
-          >
-            {connection === "follow" ? (
-              <>
-                <FaCheck className="icon" /> Connected
-              </>
-            ) : connection === "requested" ? (
-              <>
-                <FaUserMinus className="icon" /> Requested
-              </>
-            ) : (
-              <>
-                <FaPlus className="icon" /> Ask Connection
-              </>
-            )}
-          </button>
+          {self ? (
+            ""
+          ) : (
+            <button
+              className={`btn btn-${
+                connection === "follow"
+                  ? "success"
+                  : connection === "requested"
+                  ? "warning"
+                  : "secondary"
+              } py-1 px-2`}
+              onClick={connectionRequest}
+            >
+              {connection === "follow" ? (
+                <>
+                  <FaCheck className="icon" /> Connected
+                </>
+              ) : connection === "requested" ? (
+                <>
+                  <FaUserMinus className="icon" /> Requested
+                </>
+              ) : (
+                <>
+                  <FaPlus className="icon" /> Ask Connection
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
       <br />

@@ -10,7 +10,7 @@ export default function UserProfile() {
   const { id } = useParams(); // Get the dynamic ID from the URL
   const [user, setUser] = useState(null); // State to hold user data
 
-  const [self, setSelf] = useState(false);
+  const [self, setSelf] = useState(true);
   const [connection, setConnection] = useState("nofollow");
   const [loading, setLoading] = useState(true); // State to handle loading state
   const [error, setError] = useState(null); // State to handle errors
@@ -81,8 +81,8 @@ export default function UserProfile() {
         const result_t = await response.json();
         const result = result_t.student;
 
-        if (result.self) {
-          setSelf(true);
+        if (!result.self) {
+          setSelf(false);
         }
         if (result.follow === "followed") {
           setConnection("follow");
@@ -102,7 +102,7 @@ export default function UserProfile() {
 
         if (result) {
           if (!search_history.some((d) => d.name === result.name)) {
-            if (location.state && location.state.fromLink) {
+            if (location.state && location.state.fromLink && !self) {
               const tmp = {
                 name: result.name,
                 sr_no: result.sr_no,
@@ -131,7 +131,7 @@ export default function UserProfile() {
     };
 
     fetchUser(); // Call the function to fetch user data
-  }, [id, location.state]); // Dependency array to refetch if ID changes
+  }, [id, location.state, self]); // Dependency array to refetch if ID changes
 
   if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>; // Show error message

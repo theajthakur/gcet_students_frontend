@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { FaSignOutAlt } from "react-icons/fa";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
@@ -124,12 +125,17 @@ export default function Profile() {
                       </tbody>
                     </table>
                   </div>
-                  <button
-                    onClick={handleShow}
-                    className="mt-3 btn btn-warning w-100"
-                  >
-                    Update Profile
-                  </button>
+                  <div className="d-flex justify-content-between mt-3">
+                    <button className="btn btn-warning w-100 me-2">
+                      Update Profile
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      style={{ minWidth: "50px" }}
+                    >
+                      <FaSignOutAlt className="icon" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

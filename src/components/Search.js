@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Feeds from "./feeds";
 import SuggestedUser from "./SuggestedUser";
+import "./search.css";
 export default function Search() {
   const [users, setUsers] = useState([]);
   const [loading, setloading] = useState(false);
@@ -30,9 +31,9 @@ export default function Search() {
   };
   return (
     <div className="container-fluid ">
-      <div className="row h-100">
-        <div className="col-md-4 col-xl-3">
-          <div className="p-2 bg-light h-100">
+      <div className="row h-minus-nav">
+        <div className="col-md-4 col-xl-3 h-100">
+          <div className="p-2 bg-light h-100 side-container">
             <form className="form-search m-0" onSubmit={userSearch}>
               <input
                 autoComplete="off"
@@ -48,7 +49,7 @@ export default function Search() {
             <SuggestedUser users={users} />
           </div>
         </div>
-        <div className="col-md-8 col-xl-9">
+        <div className="col-md-8 col-xl-9 h-100 main-container">
           <Feeds />
         </div>
       </div>

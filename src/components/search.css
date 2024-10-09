@@ -1,0 +1,16 @@
+.h-minus-nav {
+  height: calc(100vh - 56px);
+}
+
+.side-container {
+  overflow-y: hidden;
+}
+
+.main-container {
+  overflow-y: scroll;
+}
+
+.user_suggested {
+  overflow-y: scroll;
+  height: 89%;
+}

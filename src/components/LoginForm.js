@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Loader from "./loader";
+import { toast } from "react-toastify";
 export default function LoginForm() {
   const [name, setName] = useState("");
   const [father, setFather] = useState("");
@@ -38,8 +39,10 @@ export default function LoginForm() {
       const { token } = response.data;
       if (token) {
         localStorage.setItem("token", token);
-        console.log("Token saved:", token);
-        window.location.href = "/feeds";
+        toast.success("Login Successfull!", { position: "top-right" });
+        setTimeout(() => {
+          window.location.href = "/feeds";
+        }, 3000);
       } else {
         setError("Failed to login. Please try again.");
       }

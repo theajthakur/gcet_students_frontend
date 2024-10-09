@@ -5,6 +5,7 @@ export function useAuth() {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
+    console.log("Run");
     const checkAuth = async () => {
       const result = await isAuthenticated();
       setAuth(result);

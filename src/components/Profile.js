@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Request from "./Request";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
@@ -90,9 +91,9 @@ export default function Profile() {
   };
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5 container">
         <div className="profileContainer row justify-content-center m-0">
-          <div className="col-md-8 col-lg-6">
+          <div className="col-lg-8">
             <div className="card py-2 bg-light">
               <div className="row d-flex align-items-center justify-content-center px-2">
                 <div className="col-md-6 col-lg-4">
@@ -150,6 +151,9 @@ export default function Profile() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="col-lg-4">
+            <Request />
           </div>
         </div>
       </div>

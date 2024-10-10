@@ -68,7 +68,9 @@ export default function Request() {
             <div className="user-card" key={request.id}>
               <div className="user-profile">
                 <img
-                  src="/image/profile_pic/user.jpg"
+                  src={`/image/profile_pic/${
+                    request.profile_pic ? request.profile_pic : "user.jpg"
+                  }`}
                   style={{ width: "50px" }}
                   alt="Profile Pic"
                 />

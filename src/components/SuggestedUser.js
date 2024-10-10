@@ -26,7 +26,13 @@ export default function SuggestedUser(props) {
               className="user_entity d-flex rounded bg-white mb-2"
             >
               <div className="profile_pic p-1">
-                <img src="/image/profile_pic/user.jpg" width="50px" alt="DP" />
+                <img
+                  src={`/image/profile_pic/${
+                    user.profile_pic ? user.profile_pic : "user.jpg"
+                  }`}
+                  width="50px"
+                  alt="DP"
+                />
               </div>
               <div className="user_detail p-1">
                 <h6 className="m-0">
@@ -48,7 +54,13 @@ export default function SuggestedUser(props) {
               style={{ position: "relative" }}
             >
               <div className="profile_pic p-1">
-                <img src="/image/profile_pic/user.jpg" width="50px" alt="DP" />
+                <img
+                  src={`/image/profile_pic/${
+                    user.profile_pic ? user.profile_pic : "user.jpg"
+                  }`}
+                  width="50px"
+                  alt="DP"
+                />
               </div>
               <div className="user_detail p-1">
                 <h6 className="m-0">

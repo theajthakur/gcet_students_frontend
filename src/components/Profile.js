@@ -105,7 +105,9 @@ export default function Profile() {
               <div className="row d-flex align-items-center justify-content-center px-2">
                 <div className="col-md-6 col-lg-4">
                   <img
-                    src="/image/profile_pic/user.jpg"
+                    src={`/image/profile_pic/${
+                      profile.profile_pic ? profile.profile_pic : "user.jpg"
+                    }`}
                     width={"100%"}
                     alt="Profile"
                   />

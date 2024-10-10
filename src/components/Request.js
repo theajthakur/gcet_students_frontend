@@ -9,44 +9,21 @@ export default function Request() {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
-  async function acceptReq(reqid) {
+  async function manageReq(reqid, reqType) {
+    const allowedTypes = ["accept", "decline"];
+    if (!allowedTypes.includes(reqType)) return;
+    var url = `http://localhost:8000/follow/${reqType}/${reqid}`;
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://localhost:8000/follow/accept/${reqid}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+      });
 
       const result = await response.json();
       setRequests(result.remainingRequests);
-      toast.success(result.message);
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went Wrong!");
-    } finally {
-      setLoading(false);
-    }
-  }
-  async function declineReq(reqid) {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `http://localhost:8000/follow/decline/${reqid}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
-      const result = await response.json();
-      setRequests(result);
       toast.success(result.message);
     } catch (error) {
       console.error(error);
@@ -105,13 +82,13 @@ export default function Request() {
               </div>
               <div className="user-interact ms-auto">
                 <button
-                  onClick={() => acceptReq(request.id)}
+                  onClick={() => manageReq(request.id, "accept")}
                   className="btn btn-success"
                 >
                   <FaCheck className="icon" />
                 </button>
                 <button
-                  onClick={() => declineReq(request.id)}
+                  onClick={() => manageReq(request.id, "decline")}
                   className="btn btn-danger"
                 >
                   <FaTimes className="icon" />

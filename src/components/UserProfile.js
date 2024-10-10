@@ -4,6 +4,7 @@ import Loader from "./loader";
 import { toast } from "react-toastify";
 import { FaCheck, FaUserMinus, FaPlus } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
+import { Modal } from "react-bootstrap";
 
 export default function UserProfile() {
   const location = useLocation();
@@ -12,9 +13,13 @@ export default function UserProfile() {
 
   const [user, setUser] = useState(null);
   const [self, setSelf] = useState(true);
+  const [show, setShow] = useState(false);
   const [connection, setConnection] = useState("nofollow");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // Function to handle connection requests
   const connectionRequest = async () => {
@@ -135,7 +140,11 @@ export default function UserProfile() {
           <p className="m-0">
             {user.branch} - {user.section}
           </p>
-          <p className="m-0 mb-1">56 Connections</p>
+          <p className="m-0 mb-1">
+            <span onClick={handleShow} className="text-primary">
+              {user.followCount} Connection{user.followCount > 1 ? "s" : ""}
+            </span>
+          </p>
           {!self && (
             <button
               className={`btn btn-${
@@ -193,6 +202,20 @@ export default function UserProfile() {
             ))}
         </div>
       </div>
+      {user.followers.length > 0 ? (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Followers</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {user.followers.map((follower) => (
+              <h1 key={follower.follower.id}>{follower.follower.name}</h1>
+            ))}
+          </Modal.Body>
+        </Modal>
+      ) : (
+        ""
+      )}
     </div>
   ) : (
     <FourZeroFour />

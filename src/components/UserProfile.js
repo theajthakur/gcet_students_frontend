@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Loader from "./loader";
 import { toast } from "react-toastify";
-import { FaCheck, FaUserMinus, FaPlus } from "react-icons/fa";
+import { FaCheck, FaUserMinus, FaPlus, FaComment } from "react-icons/fa";
 import FourZeroFour from "./FourZeroFour";
 import { Modal } from "react-bootstrap";
 
@@ -146,30 +146,38 @@ export default function UserProfile() {
             </span>
           </p>
           {!self && (
-            <button
-              className={`btn btn-${
-                connection === "follow"
-                  ? "success"
-                  : connection === "requested"
-                  ? "warning"
-                  : "secondary"
-              } py-1 px-2`}
-              onClick={connectionRequest}
-            >
-              {connection === "follow" ? (
-                <>
-                  <FaCheck className="icon" /> Connected
-                </>
-              ) : connection === "requested" ? (
-                <>
-                  <FaUserMinus className="icon" /> Requested
-                </>
-              ) : (
-                <>
-                  <FaPlus className="icon" /> Ask Connection
-                </>
+            <>
+              <button
+                className={`btn btn-${
+                  connection === "follow"
+                    ? "success"
+                    : connection === "requested"
+                    ? "warning"
+                    : "secondary"
+                } py-1 px-2`}
+                onClick={connectionRequest}
+              >
+                {connection === "follow" ? (
+                  <>
+                    <FaCheck className="icon" /> Connected
+                  </>
+                ) : connection === "requested" ? (
+                  <>
+                    <FaUserMinus className="icon" /> Requested
+                  </>
+                ) : (
+                  <>
+                    <FaPlus className="icon" /> Ask Connection
+                  </>
+                )}
+              </button>
+
+              {connection === "follow" && (
+                <button className="btn btn-warning ms-2">
+                  <FaComment className="icon" /> Chit Chat
+                </button>
               )}
-            </button>
+            </>
           )}
         </div>
       </div>

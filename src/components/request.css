@@ -1,0 +1,37 @@
+.user-card {
+  display: inline-flex;
+  border: 1px solid lightgrey;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: 0.2s;
+  cursor: pointer;
+  margin: 3px 0;
+  user-select: none;
+}
+
+.user-card .user-profile img {
+  border-radius: 50%;
+}
+
+.user-card .user-meta {
+  padding-left: 10px;
+  text-transform: capitalize;
+}
+
+.user-card .user-meta h3 {
+  font-size: 1.3rem;
+  color: #484848;
+  font-weight: 400;
+}
+
+.user-card .user-meta p {
+  font-size: 0.8rem;
+  color: grey;
+}
+
+.user-card:hover {
+  background: #0000000a;
+}

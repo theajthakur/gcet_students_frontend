@@ -10,8 +10,18 @@ export default function Profile() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
-    mobile: "",
-    email: "",
+    sr_no: 961,
+    branch_sr: 88,
+    class_sr: 16,
+    branch: "CSE",
+    section: "B1",
+    tmp_roll: "240000CS0088",
+    adm_no: "24GCEBCS031",
+    name: "ARYATA SRIVASTAVA",
+    father_name: "Dr. Ram Chandra Srivastava",
+    profile_pic: null,
+    email: "aryata@gmail.com",
+    mobile: "8572939842",
   });
   useEffect(() => {
     const fetchProfile = async () => {
@@ -28,10 +38,7 @@ export default function Profile() {
         const result = await response.json();
         if (response.ok) {
           // Update profile state with the fetched data
-          setProfile({
-            mobile: result.mobile,
-            email: result.email,
-          });
+          setProfile(result);
         } else {
           console.error("Error fetching profile:", result);
         }
@@ -112,23 +119,23 @@ export default function Profile() {
                       <tbody>
                         <tr>
                           <th>Sr No :</th>
-                          <td>66</td>
+                          <td>{profile.sr_no}</td>
                         </tr>
                         <tr>
                           <th>Name :</th>
-                          <td>Vijay Singh</td>
+                          <td>{profile.name}</td>
                         </tr>
                         <tr>
                           <th>Father :</th>
-                          <td>Dharmendra Singh</td>
+                          <td>{profile.father_name}</td>
                         </tr>
                         <tr>
                           <th>Branch :</th>
-                          <td>CSE-C</td>
+                          <td>{profile.branch_sr}</td>
                         </tr>
                         <tr>
                           <th>Admission No :</th>
-                          <td>24GCEBCS201</td>
+                          <td>{profile.adm_no}</td>
                         </tr>
                       </tbody>
                     </table>

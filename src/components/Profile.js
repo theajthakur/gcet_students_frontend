@@ -100,7 +100,7 @@ export default function Profile() {
     <>
       <div className="mt-5 container">
         <div className="profileContainer row justify-content-center m-0">
-          <div className="col-lg-8">
+          <div className="col-lg-8 mb-3">
             <div className="card py-2 bg-light">
               <div className="row d-flex align-items-center justify-content-center px-2">
                 <div className="col-md-6 col-lg-4">
@@ -161,7 +161,7 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="col-lg-4">
+          <div className="col-lg-4 mb-3">
             <Request />
           </div>
         </div>

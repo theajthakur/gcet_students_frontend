@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCheck, FaUser } from "react-icons/fa";
+import { FaCheck, FaTimes, FaUser } from "react-icons/fa";
 import Loader from "./loader";
 import "./request.css";
 import { toast } from "react-toastify";
@@ -14,6 +14,29 @@ export default function Request() {
       setLoading(true);
       const response = await fetch(
         `http://localhost:8000/follow/accept/${reqid}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      const result = await response.json();
+      setRequests(result.remainingRequests);
+      toast.success(result.message);
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went Wrong!");
+    } finally {
+      setLoading(false);
+    }
+  }
+  async function declineReq(reqid) {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:8000/follow/decline/${reqid}`,
         {
           method: "POST",
           headers: {
@@ -86,6 +109,12 @@ export default function Request() {
                   className="btn btn-success"
                 >
                   <FaCheck className="icon" />
+                </button>
+                <button
+                  onClick={() => declineReq(request.id)}
+                  className="btn btn-danger"
+                >
+                  <FaTimes className="icon" />
                 </button>
               </div>
             </div>

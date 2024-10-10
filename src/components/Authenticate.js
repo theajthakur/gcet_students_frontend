@@ -7,18 +7,15 @@ export async function isAuthenticated() {
     const response = await fetch("http://localhost:8000/checklogin", {
       method: "GET",
       headers: {
-        Authorization: token, // Optional: use 'Bearer' if your API expects it
+        Authorization: token,
       },
     });
 
     // Read the response body once and store it
     const result = await response.json();
 
-    // Log the result for debugging purposes
-    console.log(result);
-
     if (response.ok) {
-      return result.status === "success";
+      return result;
     } else {
       return false;
     }

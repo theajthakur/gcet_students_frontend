@@ -29,7 +29,7 @@ const App = () => {
   // Show Navbar on all routes except /login
   const ShowNavbar = () => {
     const location = useLocation();
-    return location.pathname !== "/login" ? <Navbar /> : null;
+    return location.pathname !== "/login" ? <Navbar user={auth} /> : null;
   };
 
   useEffect(() => {

@@ -73,7 +73,7 @@ export default function UserProfile() {
 
         setSelf(result.self);
         setConnection(
-          result.follow === "followed"
+          result.follow === "follow"
             ? "follow"
             : result.follow === "requested"
             ? "requested"

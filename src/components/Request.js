@@ -69,7 +69,9 @@ export default function Request() {
               <div className="user-profile">
                 <img
                   src={`/image/profile_pic/${
-                    request.profile_pic ? request.profile_pic : "user.jpg"
+                    request.follower.profile_pic
+                      ? request.follower.profile_pic
+                      : "user.jpg"
                   }`}
                   style={{ width: "50px" }}
                   alt="Profile Pic"

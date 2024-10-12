@@ -27,9 +27,7 @@ export default function SuggestedUser(props) {
             >
               <div className="profile_pic p-1">
                 <img
-                  src={`/image/profile_pic/${
-                    user.profile_pic ? user.profile_pic : "user.jpg"
-                  }`}
+                  src={`http://localhost:8000/static/profile/picture/${user.adm_no}`}
                   width="50px"
                   alt="DP"
                 />
@@ -55,9 +53,7 @@ export default function SuggestedUser(props) {
             >
               <div className="profile_pic p-1">
                 <img
-                  src={`/image/profile_pic/${
-                    user.profile_pic ? user.profile_pic : "user.jpg"
-                  }`}
+                  src={`http://localhost:8000/static/profile/picture/${user.adm_no}`}
                   width="50px"
                   alt="DP"
                 />

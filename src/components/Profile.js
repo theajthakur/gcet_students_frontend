@@ -68,9 +68,7 @@ export default function Profile() {
     mobile: null,
   });
   const [imageSrc, setImageSrc] = useState(
-    `/image/profile_pic/${
-      profile.profile_pic ? profile.profile_pic : "user.jpg"
-    }`
+    `http://localhost:8000/static/profile/picture/0`
   );
 
   const [isDragging, setIsDragging] = useState(false);
@@ -116,7 +114,9 @@ export default function Profile() {
         if (response.ok) {
           setloading(false);
           setProfile(result);
-          setImageSrc(`/image/profile_pic/${result.profile_pic}`);
+          setImageSrc(
+            `http://localhost:8000/static/profile/picture/${result.adm_no}`
+          );
         } else {
           console.error("Error fetching profile:", result);
         }

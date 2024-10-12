@@ -4,24 +4,26 @@ import { toast } from "react-toastify";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Request from "./Request";
+import Loader from "./loader";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
   const [show, setShow] = useState(false);
+  const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     sr_no: 961,
-    branch_sr: 88,
-    class_sr: 16,
-    branch: "CSE",
-    section: "B1",
-    tmp_roll: "240000CS0088",
-    adm_no: "24GCEBCS031",
-    name: "ARYATA SRIVASTAVA",
-    father_name: "Dr. Ram Chandra Srivastava",
+    branch_sr: null,
+    class_sr: null,
+    branch: null,
+    section: null,
+    tmp_roll: null,
+    adm_no: null,
+    name: null,
+    father_name: null,
     profile_pic: null,
-    email: "aryata@gmail.com",
-    mobile: "8572939842",
+    email: null,
+    mobile: null,
   });
   useEffect(() => {
     const fetchProfile = async () => {
@@ -37,7 +39,7 @@ export default function Profile() {
         });
         const result = await response.json();
         if (response.ok) {
-          // Update profile state with the fetched data
+          setloading(false);
           setProfile(result);
         } else {
           console.error("Error fetching profile:", result);
@@ -98,104 +100,115 @@ export default function Profile() {
   };
   return (
     <>
-      <div className="mt-5 container">
-        <div className="profileContainer row justify-content-center m-0">
-          <div className="col-lg-8 mb-3">
-            <div className="card py-2 bg-light">
-              <div className="row d-flex align-items-center justify-content-center px-2">
-                <div className="col-md-6 col-lg-4">
-                  <img
-                    src={`/image/profile_pic/${
-                      profile.profile_pic ? profile.profile_pic : "user.jpg"
-                    }`}
-                    width={"100%"}
-                    alt="Profile"
-                  />
-                  <p className="mt-3 m-0 text-center text-primary">
-                    Change Profile Picture
-                  </p>
-                </div>
-                <div className="col-md-6 col-lg-8">
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    <table className="table" style={{ margin: "auto" }}>
-                      <tbody>
-                        <tr>
-                          <th>Sr No :</th>
-                          <td>{profile.sr_no}</td>
-                        </tr>
-                        <tr>
-                          <th>Name :</th>
-                          <td>{profile.name}</td>
-                        </tr>
-                        <tr>
-                          <th>Father :</th>
-                          <td>{profile.father_name}</td>
-                        </tr>
-                        <tr>
-                          <th>Branch :</th>
-                          <td>{profile.branch_sr}</td>
-                        </tr>
-                        <tr>
-                          <th>Admission No :</th>
-                          <td>{profile.adm_no}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="d-flex justify-content-between mt-3">
-                    <button
-                      onClick={handleShow}
-                      className="btn btn-warning w-100 me-2"
-                    >
-                      Update Profile
-                    </button>
-                    <button
-                      onClick={handleLogOut}
-                      className="btn btn-danger"
-                      style={{ minWidth: "50px" }}
-                    >
-                      <FaSignOutAlt className="icon" />
-                    </button>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <div className="mt-5 container">
+            <div className="profileContainer row justify-content-center m-0">
+              <div className="col-lg-8 mb-3">
+                <div className="card py-2 bg-light">
+                  <div className="row d-flex align-items-center justify-content-center px-2">
+                    <div className="col-md-6 col-lg-4 text-center">
+                      <img
+                        src={`/image/profile_pic/${
+                          profile.profile_pic ? profile.profile_pic : "user.jpg"
+                        }`}
+                        width={"100%"}
+                        style={{
+                          borderRadius: "50%",
+                          width: "200px",
+                          padding: "20px",
+                        }}
+                        alt="Profile"
+                      />
+                      <p className="mt-3 m-0 text-center text-primary">
+                        Change Profile Picture
+                      </p>
+                    </div>
+                    <div className="col-md-6 col-lg-8">
+                      <div className="d-flex align-items-center justify-content-center h-100">
+                        <table className="table" style={{ margin: "auto" }}>
+                          <tbody>
+                            <tr>
+                              <th>Sr No :</th>
+                              <td>{profile.sr_no}</td>
+                            </tr>
+                            <tr>
+                              <th>Name :</th>
+                              <td>{profile.name}</td>
+                            </tr>
+                            <tr>
+                              <th>Father :</th>
+                              <td>{profile.father_name}</td>
+                            </tr>
+                            <tr>
+                              <th>Branch :</th>
+                              <td>{profile.branch_sr}</td>
+                            </tr>
+                            <tr>
+                              <th>Admission No :</th>
+                              <td>{profile.adm_no}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="d-flex justify-content-between mt-3">
+                        <button
+                          onClick={handleShow}
+                          className="btn btn-warning w-100 me-2"
+                        >
+                          Update Profile
+                        </button>
+                        <button
+                          onClick={handleLogOut}
+                          className="btn btn-danger"
+                          style={{ minWidth: "50px" }}
+                        >
+                          <FaSignOutAlt className="icon" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="col-lg-4 mb-3">
+                <Request />
+              </div>
             </div>
           </div>
-          <div className="col-lg-4 mb-3">
-            <Request />
-          </div>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form onSubmit={updateProfile} className={"m-0 profile_updater"}>
+                <div className="form-group">
+                  <input
+                    type="number"
+                    name="mobile"
+                    className="form-control"
+                    placeholder="Your Mobile Number"
+                    onChange={updateVal}
+                    value={profile.mobile ? profile.mobile : ""}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control"
+                    placeholder="Your Email Address"
+                    onChange={updateVal}
+                    value={profile.email ? profile.email : ""}
+                  />
+                </div>
+                <button className="btn btn-warning w-100">Save</button>
+              </form>
+            </Modal.Body>
+          </Modal>
         </div>
-      </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={updateProfile} className={"m-0 profile_updater"}>
-            <div className="form-group">
-              <input
-                type="number"
-                name="mobile"
-                className="form-control"
-                placeholder="Your Mobile Number"
-                onChange={updateVal}
-                value={profile.mobile ? profile.mobile : ""}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                placeholder="Your Email Address"
-                onChange={updateVal}
-                value={profile.email ? profile.email : ""}
-              />
-            </div>
-            <button className="btn btn-warning w-100">Save</button>
-          </form>
-        </Modal.Body>
-      </Modal>
+      )}
     </>
   );
 }

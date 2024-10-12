@@ -23,6 +23,7 @@ export default function Request() {
       });
 
       const result = await response.json();
+      console.log(result);
       setRequests(result.remainingRequests);
       toast.success(result.message);
     } catch (error) {
@@ -68,11 +69,7 @@ export default function Request() {
             <div className="user-card" key={request.id}>
               <div className="user-profile">
                 <img
-                  src={`/image/profile_pic/${
-                    request.follower.profile_pic
-                      ? request.follower.profile_pic
-                      : "user.jpg"
-                  }`}
+                  src={`http://localhost:8000/static/profile/picture/${request.follower.adm_no}`}
                   style={{ width: "50px" }}
                   alt="Profile Pic"
                 />

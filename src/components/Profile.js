@@ -1,12 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Request from "./Request";
 import Loader from "./loader";
-
 export default function Profile() {
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        getImageResolution(reader.result)
+          .then((resolution) => {
+            resolution.width === resolution.height
+              ? setImageSrc(reader.result)
+              : toast.error("Only Square shaped Image are Allowed!");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const getImageResolution = (dataUrl) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function () {
+        resolve({ width: img.width, height: img.height });
+      };
+      img.onerror = function () {
+        reject(new Error("Invalid image data"));
+      };
+      img.src = dataUrl;
+    });
+  };
+
   const token = localStorage.getItem("token");
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
@@ -25,6 +67,39 @@ export default function Profile() {
     email: null,
     mobile: null,
   });
+  const [imageSrc, setImageSrc] = useState(
+    `/image/profile_pic/${
+      profile.profile_pic ? profile.profile_pic : "user.jpg"
+    }`
+  );
+
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const changeProfilePic = () => {
+    fileInputRef.current.click(); // Open the file dialog
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        getImageResolution(reader.result)
+          .then((resolution) => {
+            resolution.width === resolution.height
+              ? setImageSrc(reader.result)
+              : toast.error("Only Square shaped Image are Allowed!");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+      reader.readAsDataURL(file); // Convert the file to a data URL
+    } else {
+      console.error("Please select a valid image file.");
+    }
+  };
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem("token");
@@ -41,6 +116,7 @@ export default function Profile() {
         if (response.ok) {
           setloading(false);
           setProfile(result);
+          setImageSrc(`/image/profile_pic/${result.profile_pic}`);
         } else {
           console.error("Error fetching profile:", result);
         }
@@ -109,11 +185,16 @@ export default function Profile() {
               <div className="col-lg-8 mb-3">
                 <div className="card py-2 bg-light">
                   <div className="row d-flex align-items-center justify-content-center px-2">
-                    <div className="col-md-6 col-lg-4 text-center">
+                    <div
+                      className={`col-md-6 col-lg-4 text-center ${
+                        isDragging ? "dp_dragging" : ""
+                      }`}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                    >
                       <img
-                        src={`/image/profile_pic/${
-                          profile.profile_pic ? profile.profile_pic : "user.jpg"
-                        }`}
+                        src={imageSrc}
                         width={"100%"}
                         style={{
                           borderRadius: "50%",
@@ -122,9 +203,22 @@ export default function Profile() {
                         }}
                         alt="Profile"
                       />
-                      <p className="mt-3 m-0 text-center text-primary">
-                        Change Profile Picture
-                      </p>
+                      <div>
+                        <p
+                          className="mt-3 m-0 text-center text-primary"
+                          style={{ cursor: "pointer" }}
+                          onClick={changeProfilePic}
+                        >
+                          Change Profile Picture
+                        </p>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          ref={fileInputRef}
+                          style={{ display: "none" }}
+                          onChange={handleFileChange}
+                        />
+                      </div>
                     </div>
                     <div className="col-md-6 col-lg-8">
                       <div className="d-flex align-items-center justify-content-center h-100">

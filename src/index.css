@@ -121,3 +121,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.dp_dragging {
+  background-color: #0000001c;
+}

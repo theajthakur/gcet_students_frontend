@@ -4,6 +4,61 @@ export default function Feeds() {
   const [posts, setPosts] = useState([
     {
       user: {
+        adm_no: "24GCEBCS201",
+        name: "Vijay Singh",
+        followed: true,
+      },
+      post: {
+        id: 2993673,
+        thumbnail:
+          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        comments: 9,
+      },
+    },
+    {
+      user: {
+        name: "Vijay Singh",
+        followed: true,
+      },
+      post: {
+        id: 2993673,
+        thumbnail:
+          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        comments: 9,
+      },
+    },
+    {
+      user: {
+        name: "Vijay Singh",
+        followed: true,
+      },
+      post: {
+        id: 2993673,
+        thumbnail:
+          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        comments: 9,
+      },
+    },
+    {
+      user: {
         name: "Vijay Singh",
         followed: true,
       },
@@ -37,6 +92,20 @@ export default function Feeds() {
                 <div className="post-header">
                   <div className="user-detail px-3">
                     <div className="user_card d-flex">
+                      <div
+                        className="user-profile-pic me-3"
+                        style={{ width: "50px" }}
+                      >
+                        <img
+                          alt={post.user.adm_no}
+                          style={{
+                            width: "100%",
+                            borderRadius: "50%",
+                            padding: "2px",
+                          }}
+                          src={`http://localhost:8000/static/profile/picture/${post.user.adm_no}`}
+                        />
+                      </div>
                       <div>
                         <p className="username m-0">{post.user.name}</p>
                         <p className="timestamp m-0 small opacity-75">

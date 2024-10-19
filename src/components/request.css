@@ -35,3 +35,12 @@
 .user-card:hover {
   background: #0000000a;
 }
+
+.user-interact .btn {
+  border-radius: 0;
+  padding: 0 5px;
+}
+
+.user-interact {
+  display: flex;
+}

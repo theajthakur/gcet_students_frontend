@@ -97,13 +97,15 @@ export default function Profile() {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const resolution = await getImageResolution(reader.result);
-        if (resolution.width === resolution.height) {
-          setImageSrc(reader.result);
-          setUpload(true);
-        } else {
-          toast.error("Only square-shaped images are allowed!");
-        }
+        // const resolution = await getImageResolution(reader.result);
+        // if (resolution.width === resolution.height) {
+        //   setImageSrc(reader.result);
+        //   setUpload(true);
+        // } else {
+        //   toast.error("Only square-shaped images are allowed!");
+        // }
+        setImageSrc(reader.result);
+        setUpload(true);
       };
       reader.readAsDataURL(file);
     } else {
@@ -119,12 +121,14 @@ export default function Profile() {
       const reader = new FileReader();
       reader.onload = async () => {
         const resolution = await getImageResolution(reader.result);
-        if (resolution.width === resolution.height) {
-          setImageSrc(reader.result);
-          setUpload(true);
-        } else {
-          toast.error("Only square-shaped images are allowed!");
-        }
+        // if (resolution.width === resolution.height) {
+        //   setImageSrc(reader.result);
+        //   setUpload(true);
+        // } else {
+        //   toast.error("Only square-shaped images are allowed!");
+        // }
+        setImageSrc(reader.result);
+        setUpload(true);
       };
       reader.readAsDataURL(file);
     }

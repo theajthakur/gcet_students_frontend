@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FaComment, FaFlag, FaPlus, FaThumbsUp } from "react-icons/fa";
 import "./feeds.css";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 export default function Feeds() {
+  const inputRef = useRef(null);
   const [show, setShow] = useState(false);
   const [comments, setComments] = useState([
     {
+      id: 283,
       adm_no: "24GCEBCS201",
+      name: "Vijay Singh",
       date_created: "25 August",
       comment: "Awesome Picture 💖",
     },
     {
+      id: 3863,
       adm_no: "24GCEBCS169",
+      name: "Shreshtha Gupta",
       date_created: "29 August",
       comment: "Jay shree mahakal 🚩🚩",
     },
@@ -37,7 +42,8 @@ export default function Feeds() {
         liked: false,
         comments: [
           {
-            userId: "24GCEBCS201",
+            name: "Sarthak Sharma",
+            adm_no: "24GCEBCS164",
             date_created: "25 August",
             comment: "Hello Munna!",
           },
@@ -74,7 +80,26 @@ export default function Feeds() {
       ? toast.info("Post Unliked")
       : toast.info("Post Liked");
   };
+
+  const postComment = (event) => {
+    event.preventDefault();
+    const commentValue = inputRef.current.value;
+    if (!commentValue) return false;
+    inputRef.current.value = "";
+    const newCommentObj = {
+      id: comments.length + 1,
+      comment: commentValue,
+      adm_no: "24GCEBCS201",
+      name: "Vijay Singh",
+      date_created: "20 October",
+    };
+
+    setComments([...comments, newCommentObj]);
+    toast.info("Comment Posted");
+  };
   const showComments = (postId) => {
+    const tmpc = posts.find((post) => post.post.id === postId);
+    setComments(tmpc.interaction.comments);
     setShow(true);
   };
   return (
@@ -174,11 +199,14 @@ export default function Feeds() {
         <Modal.Header closeButton>
           <Modal.Title>Comments</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ maxHeight: "65vh", overflowY: "scroll" }}>
           <div className="comment-body">
             {comments.map((comment) => {
               return (
-                <div className="comment mb-2 bg-light rounded-2 p-2">
+                <div
+                  key={`comment-${comment.id}`}
+                  className="comment mb-2 bg-light rounded-2 p-2"
+                >
                   <div className=" d-flex w-100">
                     <div className="user-dp me-3" style={{ width: "30px" }}>
                       <img
@@ -189,7 +217,7 @@ export default function Feeds() {
                       />
                     </div>
                     <div className="middle-body">
-                      <p className="smal h6 m-0">Vijay</p>
+                      <p className="smal h6 m-0">{comment.name}</p>
                       <p className="m-0 opacity-75 small">{comment.comment}</p>
                       <p className="m-0 small opacity-50">Reply</p>
                     </div>
@@ -200,25 +228,29 @@ export default function Feeds() {
                 </div>
               );
             })}
-            <div
-              className="post-comment pt-2"
-              style={{ borderTop: "1px solid lightgrey" }}
-            >
-              <div className="d-flex">
-                <div className="pe-1 w-100">
-                  <input
-                    type="text"
-                    className="form-control opacity-75"
-                    placeholder="Your Comment...."
-                  />
-                </div>
-                <div className="ms-auto">
-                  <button className="btn btn-primary">Submit</button>
-                </div>
-              </div>
-            </div>
           </div>
         </Modal.Body>
+        <Modal.Footer className="d-block">
+          <form
+            onSubmit={postComment}
+            className="post-comment pt-2"
+            style={{ borderTop: "1px solid lightgrey" }}
+          >
+            <div className="d-flex">
+              <div className="pe-1 w-100">
+                <input
+                  type="text"
+                  className="form-control opacity-75"
+                  placeholder="Your Comment...."
+                  ref={inputRef}
+                />
+              </div>
+              <div className="ms-auto">
+                <button className="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </Modal.Footer>
       </Modal>
     </div>
   );

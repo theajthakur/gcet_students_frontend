@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaComment, FaFlag, FaPlus, FaThumbsUp } from "react-icons/fa";
 import "./feeds.css";
+import { toast } from "react-toastify";
 export default function Feeds() {
   const [posts, setPosts] = useState([
     {
@@ -84,6 +85,10 @@ export default function Feeds() {
     },
   ]);
   const likePost = (postId) => {
+    const tmpo = posts.find((post) => post.post.id === postId);
+    tmpo.interaction.liked
+      ? toast.info("Post Unliked")
+      : toast.info("Post Liked");
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.post.id === postId

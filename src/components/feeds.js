@@ -2,7 +2,21 @@ import React, { useState } from "react";
 import { FaComment, FaFlag, FaPlus, FaThumbsUp } from "react-icons/fa";
 import "./feeds.css";
 import { toast } from "react-toastify";
+import { Modal } from "react-bootstrap";
 export default function Feeds() {
+  const [show, setShow] = useState(false);
+  const [comments, setComments] = useState([
+    {
+      adm_no: "24GCEBCS201",
+      date_created: "25 August",
+      comment: "Awesome Picture 💖",
+    },
+    {
+      adm_no: "24GCEBCS169",
+      date_created: "29 August",
+      comment: "Jay shree mahakal 🚩🚩",
+    },
+  ]);
   const [posts, setPosts] = useState([
     {
       user: {
@@ -21,74 +35,17 @@ export default function Feeds() {
       interaction: {
         likes: 26,
         liked: false,
-        comments: 9,
-      },
-    },
-    {
-      user: {
-        id: "24gcebcs198",
-        name: "Aditya Singh",
-        followed: true,
-      },
-      post: {
-        id: 68628,
-        thumbnail:
-          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
-        liked: 1,
-        comments: 9,
-      },
-    },
-    {
-      user: {
-        adm_no: "24gcebcs198",
-        name: "Shivam Singh",
-        followed: true,
-      },
-      post: {
-        id: 197926,
-        thumbnail:
-          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
-        liked: 1,
-        comments: 9,
-      },
-    },
-    {
-      user: {
-        name: "Vijay Singh",
-        followed: true,
-      },
-      post: {
-        id: 38689,
-        thumbnail:
-          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
-        liked: 1,
-        comments: 9,
+        comments: [
+          {
+            userId: "24GCEBCS201",
+            date_created: "25 August",
+            comment: "Hello Munna!",
+          },
+        ],
       },
     },
   ]);
   const likePost = (postId) => {
-    const tmpo = posts.find((post) => post.post.id === postId);
-    tmpo.interaction.liked
-      ? toast.info("Post Unliked")
-      : toast.info("Post Liked");
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.post.id === postId
@@ -112,6 +69,13 @@ export default function Feeds() {
           : post
       )
     );
+    const tmpo = posts.find((post) => post.post.id === postId);
+    tmpo.interaction.liked
+      ? toast.info("Post Unliked")
+      : toast.info("Post Liked");
+  };
+  const showComments = (postId) => {
+    setShow(true);
   };
   return (
     <div>
@@ -185,9 +149,12 @@ export default function Feeds() {
                           <FaThumbsUp className="icon small" />{" "}
                           {post.interaction.likes}
                         </div>
-                        <div className="d-inline-block px-2 inte_btn">
+                        <div
+                          className="d-inline-block px-2 inte_btn"
+                          onClick={() => showComments(post.post.id)}
+                        >
                           <FaComment className="icon small" />{" "}
-                          {post.interaction.comments}
+                          {post.interaction.comments.length}
                         </div>
                       </div>
                       <div className="right_interact ms-auto pe-2">
@@ -203,6 +170,56 @@ export default function Feeds() {
           </div>
         </div>
       </div>
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Comments</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="comment-body">
+            {comments.map((comment) => {
+              return (
+                <div className="comment mb-2 bg-light rounded-2 p-2">
+                  <div className=" d-flex w-100">
+                    <div className="user-dp me-3" style={{ width: "30px" }}>
+                      <img
+                        alt="Commentator DP"
+                        width="100%"
+                        style={{ borderRadius: "50%" }}
+                        src={`http://localhost:8000/static/profile/picture/${comment.adm_no}`}
+                      />
+                    </div>
+                    <div className="middle-body">
+                      <p className="smal h6 m-0">Vijay</p>
+                      <p className="m-0 opacity-75 small">{comment.comment}</p>
+                      <p className="m-0 small opacity-50">Reply</p>
+                    </div>
+                    <div className="meta-data ms-auto small opacity-50">
+                      <p className="m-0">{comment.date_created}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div
+              className="post-comment pt-2"
+              style={{ borderTop: "1px solid lightgrey" }}
+            >
+              <div className="d-flex">
+                <div className="pe-1 w-100">
+                  <input
+                    type="text"
+                    className="form-control opacity-75"
+                    placeholder="Your Comment...."
+                  />
+                </div>
+                <div className="ms-auto">
+                  <button className="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

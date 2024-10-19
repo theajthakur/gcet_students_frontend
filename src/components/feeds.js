@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaComment, FaFlag, FaPlus, FaThumbsUp } from "react-icons/fa";
+import "./feeds.css";
 export default function Feeds() {
   const [posts, setPosts] = useState([
     {
@@ -18,6 +19,47 @@ export default function Feeds() {
       },
       interaction: {
         likes: 26,
+        liked: false,
+        comments: 9,
+      },
+    },
+    {
+      user: {
+        id: "24gcebcs198",
+        name: "Aditya Singh",
+        followed: true,
+      },
+      post: {
+        id: 68628,
+        thumbnail:
+          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        liked: 1,
+        comments: 9,
+      },
+    },
+    {
+      user: {
+        adm_no: "24gcebcs198",
+        name: "Shivam Singh",
+        followed: true,
+      },
+      post: {
+        id: 197926,
+        thumbnail:
+          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        liked: 1,
         comments: 9,
       },
     },
@@ -27,7 +69,7 @@ export default function Feeds() {
         followed: true,
       },
       post: {
-        id: 2993673,
+        id: 38689,
         thumbnail:
           "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
         date_uploaded: "24 August",
@@ -36,49 +78,36 @@ export default function Feeds() {
       },
       interaction: {
         likes: 26,
-        comments: 9,
-      },
-    },
-    {
-      user: {
-        name: "Vijay Singh",
-        followed: true,
-      },
-      post: {
-        id: 2993673,
-        thumbnail:
-          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
-        comments: 9,
-      },
-    },
-    {
-      user: {
-        name: "Vijay Singh",
-        followed: true,
-      },
-      post: {
-        id: 2993673,
-        thumbnail:
-          "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
+        liked: 1,
         comments: 9,
       },
     },
   ]);
-  if (2 > 3) {
-    setPosts([]);
-  }
+  const likePost = (postId) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.post.id === postId
+          ? post.interaction.liked
+            ? {
+                ...post,
+                interaction: {
+                  ...post.interaction,
+                  likes: post.interaction.likes - 1,
+                  liked: false,
+                },
+              }
+            : {
+                ...post,
+                interaction: {
+                  ...post.interaction,
+                  likes: post.interaction.likes + 1,
+                  liked: true,
+                },
+              }
+          : post
+      )
+    );
+  };
   return (
     <div>
       <div className="container mt-3">
@@ -137,16 +166,21 @@ export default function Feeds() {
                 <div className="post-footer">
                   <p className="px-1 opacity-75">{post.post.description}</p>
                   <div
-                    className="feed-intract pt-2"
+                    className="feed-interact pt-2"
                     style={{ borderTop: "1px solid lightgrey" }}
                   >
                     <div className="d-flex opacity-50">
                       <div className="left_interact px-2">
-                        <div className="d-inline-block px-2">
+                        <div
+                          className={`d-inline-block px-2 inte_btn ${
+                            post.interaction.liked ? "text-primary" : ""
+                          }`}
+                          onClick={() => likePost(post.post.id)}
+                        >
                           <FaThumbsUp className="icon small" />{" "}
                           {post.interaction.likes}
                         </div>
-                        <div className="d-inline-block px-2">
+                        <div className="d-inline-block px-2 inte_btn">
                           <FaComment className="icon small" />{" "}
                           {post.interaction.comments}
                         </div>

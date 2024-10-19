@@ -1,0 +1,12 @@
+.post-container {
+  border: 1px solid lightgrey;
+}
+
+.post-container .user-profile-pic,
+.post-container .username {
+  cursor: pointer;
+}
+
+.post-container .feed-interact .inte_btn {
+  cursor: pointer;
+}

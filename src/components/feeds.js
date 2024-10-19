@@ -6,9 +6,9 @@ export default function feeds() {
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-sm-10 col-md-8 col-lg-6">
-            <div className="post-container bg-light rounded-2 py-2">
-              <div className="post-header px-3">
-                <div className="user-detail">
+            <div className="post-container bg-light rounded-2 py-2 mb-3">
+              <div className="post-header">
+                <div className="user-detail px-3">
                   <div className="user_card d-flex">
                     <div>
                       <p className="username m-0">Vijay Singh</p>
@@ -26,13 +26,23 @@ export default function feeds() {
                 </div>
               </div>
               <div className="post-body py-2">
-                <div
-                  className="user-post"
-                  style={{ height: "300px", background: "lightgrey" }}
-                ></div>
+                <div className="user-post">
+                  <img
+                    alt="Posted by Vijay Singh"
+                    src="https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp"
+                    width={"100%"}
+                  />
+                </div>
               </div>
               <div className="post-footer">
-                <div className="feed-intract pt-2">
+                <p className="px-1 opacity-75">
+                  Finding peace at the foot of the mountains—Kedarnath, where
+                  the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath
+                </p>
+                <div
+                  className="feed-intract pt-2"
+                  style={{ borderTop: "1px solid lightgrey" }}
+                >
                   <div className="d-flex">
                     <div className="left_interact opacity-50 px-2">
                       <div className="d-inline-block px-2">

@@ -187,7 +187,7 @@ export default function Feeds() {
                   </div>
                 </div>
                 <div className="post-body py-2">
-                  <div className="user-post">
+                  <div className="user-post" data-name={post.user.name}>
                     <img
                       alt={post.post.description.substring[(0, 10)]}
                       src={post.post.thumbnail}

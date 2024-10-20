@@ -10,3 +10,31 @@
 .post-container .feed-interact .inte_btn {
   cursor: pointer;
 }
+
+.post-container .user-post {
+  position: relative;
+}
+
+.post-container .user-post:before {
+  position: absolute;
+  content: attr(data-name);
+  font-size: 2rem;
+  -webkit-text-stroke: 1px white;
+  color: transparent;
+  font-weight: 700;
+  background: #00000018;
+  width: 100%;
+  height: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: 0.3s;
+  margin-top: calc(50% - 3rem);
+}
+
+.post-container .user-post:hover:before {
+  height: 100%;
+  margin-top: 0;
+  font-size: 3rem;
+}

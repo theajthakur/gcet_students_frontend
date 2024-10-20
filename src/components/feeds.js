@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 export default function Feeds() {
   const inputRef = useRef(null);
+  const [commentPostId, setCommentPostId] = useState(null);
   function addComment(postId, newComment) {
     let post = posts.find((p) => p.post.id === postId);
     if (post) {
@@ -59,6 +60,32 @@ export default function Feeds() {
         ],
       },
     },
+    {
+      user: {
+        adm_no: "24GCEBCS164",
+        name: "Sarthak Sharma",
+        followed: false,
+      },
+      post: {
+        id: 2997718,
+        thumbnail:
+          "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/fc/f0/goa.jpg?w=1200&h=1400&s=1",
+        date_uploaded: "29 August",
+        description: "Goa wale beech pe #masti #lifestyle",
+      },
+      interaction: {
+        likes: 862,
+        liked: true,
+        comments: [
+          {
+            name: "Vijay Singh",
+            adm_no: "24GCEBCS201",
+            date_created: "30 August",
+            comment: "Are Bhai akele akele!",
+          },
+        ],
+      },
+    },
   ]);
   const likePost = (postId) => {
     setPosts((prevPosts) =>
@@ -104,12 +131,13 @@ export default function Feeds() {
     };
 
     setComments([...comments, newCommentObj]);
-    addComment(2993673, newCommentObj);
+    addComment(commentPostId, newCommentObj);
     toast.info("Comment Posted");
   };
   const showComments = (postId) => {
     const tmpc = posts.find((post) => post.post.id === postId);
     setComments(tmpc.interaction.comments);
+    setCommentPostId(postId);
     setShow(true);
   };
   return (
@@ -149,9 +177,9 @@ export default function Feeds() {
                         {post.user.followed ? (
                           ""
                         ) : (
-                          <button className="btn btn-secondary disabled">
+                          <button className="btn btn-primary">
                             <FaPlus className="icon me-1" />
-                            Unfollow
+                            Follow
                           </button>
                         )}
                       </p>

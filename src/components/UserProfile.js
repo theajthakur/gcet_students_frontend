@@ -96,7 +96,7 @@ export default function UserProfile() {
           const newEntry = {
             name: result.name,
             sr_no: result.sr_no,
-            profile_pic: result.profile_pic,
+            adm_no: result.adm_no,
             branch: result.branch,
             section: result.section,
           };

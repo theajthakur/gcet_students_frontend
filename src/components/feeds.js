@@ -5,6 +5,15 @@ import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
 export default function Feeds() {
   const inputRef = useRef(null);
+  function addComment(postId, newComment) {
+    let post = posts.find((p) => p.post.id === postId);
+    if (post) {
+      post.interaction.comments.push(newComment);
+      console.log("Comment added successfully!");
+    } else {
+      console.log("Post not found.");
+    }
+  }
   const [show, setShow] = useState(false);
   const [comments, setComments] = useState([
     {
@@ -95,6 +104,7 @@ export default function Feeds() {
     };
 
     setComments([...comments, newCommentObj]);
+    addComment(2993673, newCommentObj);
     toast.info("Comment Posted");
   };
   const showComments = (postId) => {

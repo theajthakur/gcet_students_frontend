@@ -97,13 +97,6 @@ export default function Profile() {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        // const resolution = await getImageResolution(reader.result);
-        // if (resolution.width === resolution.height) {
-        //   setImageSrc(reader.result);
-        //   setUpload(true);
-        // } else {
-        //   toast.error("Only square-shaped images are allowed!");
-        // }
         setImageSrc(reader.result);
         setUpload(true);
       };
@@ -120,13 +113,6 @@ export default function Profile() {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = async () => {
-        const resolution = await getImageResolution(reader.result);
-        // if (resolution.width === resolution.height) {
-        //   setImageSrc(reader.result);
-        //   setUpload(true);
-        // } else {
-        //   toast.error("Only square-shaped images are allowed!");
-        // }
         setImageSrc(reader.result);
         setUpload(true);
       };
@@ -141,15 +127,6 @@ export default function Profile() {
 
   const handleDragLeave = () => {
     setIsDragging(false);
-  };
-
-  const getImageResolution = (dataUrl) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve({ width: img.width, height: img.height });
-      img.onerror = () => reject(new Error("Invalid image data"));
-      img.src = dataUrl;
-    });
   };
 
   const updateProfile = async (event) => {
@@ -210,7 +187,7 @@ export default function Profile() {
                     onDragLeave={handleDragLeave}
                   >
                     <img
-                      src={imageSrc}
+                      src={`${imageSrc}?w=200&h=200`}
                       width="200"
                       style={{ borderRadius: "50%", padding: "20px" }}
                       alt="Profile"

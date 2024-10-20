@@ -69,7 +69,7 @@ export default function Request() {
             <div className="user-card" key={request.id}>
               <div className="user-profile">
                 <img
-                  src={`http://localhost:8000/static/profile/picture/${request.follower.adm_no}`}
+                  src={`http://localhost:8000/static/profile/picture/${request.follower.adm_no}?w=100&h=100`}
                   style={{ width: "50px" }}
                   alt="Profile Pic"
                 />

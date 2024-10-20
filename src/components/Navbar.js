@@ -31,7 +31,7 @@ export default function Navbar(props) {
                   padding: "2px",
                   border: "1px solid lightgrey",
                 }}
-                src={`http://localhost:8000/static/profile/picture/${props.user.user.adm_no}`}
+                src={`http://localhost:8000/static/profile/picture/${props.user.user.adm_no}?w=50&h=50`}
                 alt="profile_pic"
               />
             </Link>

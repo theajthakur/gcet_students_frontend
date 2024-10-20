@@ -123,7 +123,7 @@ export default function UserProfile() {
       <div className="d-md-flex text-center text-md-start">
         <div className="px-5 justify-content-center align-items-center h-100">
           <img
-            src={`http://localhost:8000/static/profile/picture/${user.adm_no}`}
+            src={`http://localhost:8000/static/profile/picture/${user.adm_no}?w=200&h=200`}
             className="profile_pic_main"
             alt="Profile"
           />

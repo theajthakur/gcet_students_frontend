@@ -164,7 +164,7 @@ export default function Feeds() {
                             borderRadius: "50%",
                             padding: "2px",
                           }}
-                          src={`http://localhost:8000/static/profile/picture/${post.user.adm_no}`}
+                          src={`http://localhost:8000/static/profile/picture/${post.user.adm_no}?w=100&h=100`}
                         />
                       </div>
                       <div>
@@ -251,7 +251,7 @@ export default function Feeds() {
                         alt="Commentator DP"
                         width="100%"
                         style={{ borderRadius: "50%" }}
-                        src={`http://localhost:8000/static/profile/picture/${comment.adm_no}`}
+                        src={`http://localhost:8000/static/profile/picture/${comment.adm_no}?w=100&h=100`}
                       />
                     </div>
                     <div className="middle-body">

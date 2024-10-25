@@ -42,6 +42,30 @@ export default function Feeds() {
       },
       post: {
         id: 2993673,
+        date_uploaded: "24 August",
+        description:
+          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
+      },
+      interaction: {
+        likes: 26,
+        liked: false,
+        comments: [
+          {
+            name: "Sarthak Sharma",
+            adm_no: "24GCEBCS164",
+            date_created: "25 August",
+            comment: "Hello Munna!",
+          },
+        ],
+      },
+    },
+    {
+      user: {
+        adm_no: "24GCEBCS201",
+        name: "Vijay Singh",
+      },
+      post: {
+        id: 2993674,
         thumbnail:
           "https://www.manchalamushafir.com/tour/kedarnath-yatra/images/kedarnath-view.webp",
         date_uploaded: "24 August",
@@ -140,12 +164,16 @@ export default function Feeds() {
     setCommentPostId(postId);
     setShow(true);
   };
+
+  const handlePostData = (data) => {
+    setPosts([data, ...posts]);
+  };
   return (
     <div>
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-sm-10 col-md-8 col-lg-6">
-            <Post />
+            <Post onPostData={handlePostData} />
             {posts.map((post) => (
               <div
                 key={post.post.id}
@@ -184,13 +212,17 @@ export default function Feeds() {
                   </div>
                 </div>
                 <div className="post-body py-2">
-                  <div className="user-post" data-name={post.user.name}>
-                    <img
-                      alt={post.post.description.substring[(0, 10)]}
-                      src={post.post.thumbnail}
-                      width={"100%"}
-                    />
-                  </div>
+                  {post.post.thumbnail ? (
+                    <div className="user-post" data-name={post.user.name}>
+                      <img
+                        alt={post.post.description.substring[(0, 10)]}
+                        src={post.post.thumbnail}
+                        width={"100%"}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="post-footer">
                   <p className="px-1 opacity-75">{post.post.description}</p>

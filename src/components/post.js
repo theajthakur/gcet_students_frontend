@@ -1,19 +1,47 @@
 import React, { useState } from "react";
 import { FaImage, FaPaperPlane, FaVideo } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-export default function Post() {
+export default function Post({ onPostData }) {
   const [postCaption, setPostCaption] = useState("");
   const formtriggered = (event) => {
-    const curVal = event.target.value.trim();
-    if (curVal.length <= 200) {
+    const curVal = event.target.value.replace(/\s+/g, " ");
+    if (curVal.trim().length <= 200) {
       setPostCaption(curVal);
     }
   };
+
+  const publishPost = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8000/user/publish/post", {
+        method: "POST",
+        body: JSON.stringify({ caption: postCaption }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.token,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        onPostData(result);
+        toast.success("Post Published!");
+        setPostCaption("");
+      } else {
+        console.error("Error fetching profile:", await response.json());
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
   return (
     <>
-      <div className="post-publisher mb-3 p-1 bg-light">
+      <form onSubmit={publishPost} className="post-publisher mb-3 p-1 bg-light">
         <div className="post-textarea-container">
           <textarea
+            name="caption"
             className="form-control"
             onChange={formtriggered}
             value={postCaption}
@@ -45,7 +73,7 @@ export default function Post() {
             ""
           )}
         </div>
-      </div>
+      </form>
     </>
   );
 }

@@ -38,3 +38,8 @@
   margin-top: 0;
   font-size: 3rem;
 }
+
+.user_card p.username a {
+  color: black;
+  text-decoration: none;
+}

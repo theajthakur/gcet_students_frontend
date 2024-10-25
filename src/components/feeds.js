@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
-import { FaComment, FaFlag, FaPlus, FaThumbsUp } from "react-icons/fa";
+import { FaComment, FaFlag, FaThumbsUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./feeds.css";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
+import Post from "./post";
 export default function Feeds() {
   const inputRef = useRef(null);
   const [commentPostId, setCommentPostId] = useState(null);
@@ -37,7 +39,6 @@ export default function Feeds() {
       user: {
         adm_no: "24GCEBCS201",
         name: "Vijay Singh",
-        followed: true,
       },
       post: {
         id: 2993673,
@@ -64,7 +65,6 @@ export default function Feeds() {
       user: {
         adm_no: "24GCEBCS164",
         name: "Sarthak Sharma",
-        followed: false,
       },
       post: {
         id: 2997718,
@@ -145,6 +145,7 @@ export default function Feeds() {
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-sm-10 col-md-8 col-lg-6">
+            <Post />
             {posts.map((post) => (
               <div
                 key={post.post.id}
@@ -168,21 +169,17 @@ export default function Feeds() {
                         />
                       </div>
                       <div>
-                        <p className="username m-0">{post.user.name}</p>
+                        <p className="username m-0">
+                          <Link
+                            to={`http://localhost:3000/search/${post.user.adm_no}`}
+                          >
+                            {post.user.name}
+                          </Link>
+                        </p>
                         <p className="timestamp m-0 small opacity-75">
                           {post.post.date_uploaded}
                         </p>
                       </div>
-                      <p className="ms-auto my-auto">
-                        {post.user.followed ? (
-                          ""
-                        ) : (
-                          <button className="btn btn-primary">
-                            <FaPlus className="icon me-1" />
-                            Follow
-                          </button>
-                        )}
-                      </p>
                     </div>
                   </div>
                 </div>

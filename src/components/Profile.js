@@ -227,7 +227,7 @@ export default function Profile() {
                           </tr>
                           <tr>
                             <th>Branch :</th>
-                            <td>{profile.branch_sr}</td>
+                            <td>{profile.branch}</td>
                           </tr>
                           <tr>
                             <th>Admission No :</th>

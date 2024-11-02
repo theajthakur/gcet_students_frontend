@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import Loader from "./loader";
 import { toast } from "react-toastify";
 import { FaCheck, FaUserMinus, FaPlus, FaComment } from "react-icons/fa";
@@ -214,9 +214,33 @@ export default function UserProfile() {
             <Modal.Title>Followers</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {user.followers.map((follower) => (
-              <h1 key={follower.follower.id}>{follower.follower.name}</h1>
-            ))}
+            <div className="row justify-content-center">
+              {user.followers.map((follower) => (
+                <div className="col-md-6">
+                  <Link
+                    to={`/search/${follower.follower.adm_no}`}
+                    style={{ color: "black" }}
+                  >
+                    <div className="user-card">
+                      <div className="user-card-inner d-flex align-items-center">
+                        <div className="user-dp">
+                          <img
+                            alt="user_dp"
+                            src={`http://localhost:8000/static/profile/picture/${follower.follower.adm_no}?w=50&h=50`}
+                            style={{ width: "40px", borderRadius: "50%" }}
+                          />
+                        </div>
+                        <div className="user-meta">
+                          <h5 className="m-0" key={follower.follower.id}>
+                            {follower.follower.name}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </Modal.Body>
         </Modal>
       ) : (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHistory, FaTimes } from "react-icons/fa";
+import { FaHistory, FaSearch, FaTimes } from "react-icons/fa";
 
 export default function SuggestedUser(props) {
   if (!localStorage.search_history) {
@@ -82,8 +82,13 @@ export default function SuggestedUser(props) {
         ) : (
           <>
             {localStorage.setItem("search_history", [])}
-            <div className="alert alert-warning text-center">
-              <p className="m-0">Search By Name or Admission Number</p>
+            <div className="h-100 d-flex w-100 align-items-center">
+              <div className="text-center">
+                <div className="text-center h3 mb-3">
+                  <FaSearch className="icon anime anime_shaky" />
+                </div>
+                <p className="m-0 small">Search By Name or Admission Number</p>
+              </div>
             </div>
           </>
         )}

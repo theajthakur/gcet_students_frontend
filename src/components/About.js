@@ -1,42 +1,16 @@
 import React from "react";
-// import axios from "axios";
+import { FaClock } from "react-icons/fa";
 
 export default function About() {
-  const handleFeedback = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const userData = Object.fromEntries(formData);
-    console.log(userData.user_feedback);
-  };
   return (
-    <div className="container mt-3 text-center">
-      <h1 className="text-center text-warning">About</h1>
-      <p className="p-5 bg-light">
-        As a first-year student at GCET, I created this site as a way to
-        practice and enhance my skills. I’ve built it using ReactJS, ExpressJS,
-        NodeJS, and MySQL, and I’ve incorporated Bootstrap to ensure a
-        responsive design. I hope you enjoy exploring it! Your feedback is
-        incredibly valuable to me, so if you have any suggestions or ideas for
-        improvements, please don’t hesitate to share them. I’m always eager to
-        learn and improve. Thanks for checking it out!
-      </p>
-      <div className="mt-3">
-        <form
-          onSubmit={handleFeedback}
-          className="row m-0 justify-content-center"
-        >
-          <div className="col-sm-10 col-md-6">
-            <textarea
-              className="form-control"
-              rows="6"
-              name="user_feedback"
-            ></textarea>
-            <button className="mt-2 btn btn-warning w-100">
-              Send Feedback
-            </button>
-          </div>
-        </form>
+    <>
+      <div className="vh-100 d-flex justify-content-center align-items-center">
+        <div className="text-center">
+          <FaClock className="icon h1 text-danger mb-5" />
+          <h3 className="text-danger">It will take some time.....</h3>
+        </div>
+        <br></br>
       </div>
-    </div>
+    </>
   );
 }

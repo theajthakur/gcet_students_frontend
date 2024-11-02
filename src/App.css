@@ -48,3 +48,22 @@
     left: 105%;
   }
 }
+
+body {
+  background: calc(0.9 * 16px) calc(0.9 * 16px) / calc(2 * 16px) calc(2 * 16px)
+      conic-gradient(at 20% 20%, #0000 75%, rgba(255, 0, 0, 0.04) 0),
+    calc(-0.1 * 16px) calc(-0.1 * 16px) / calc(2 * 16px) calc(2 * 16px)
+      conic-gradient(at 20% 20%, #0000 75%, rgba(255, 0, 0, 0.04) 0),
+    calc(0.7 * 16px) calc(0.7 * 16px) / calc(2 * 16px) calc(2 * 16px)
+      conic-gradient(at 40% 40%, #0000 75%, rgba(255, 195, 0, 0) 0),
+    calc(-0.3 * 16px) calc(-0.3 * 16px) / calc(2 * 16px) calc(2 * 16px)
+      conic-gradient(at 40% 40%, #0000 75%, rgba(255, 195, 0, 0) 0),
+    conic-gradient(
+        from 90deg at 20% 20%,
+        rgba(255, 0, 0, 0.04) 25%,
+        rgba(255, 195, 0, 0) 0
+      )
+      0 0/16px 16px;
+
+  font-family: "Montserrat", sans-serif;
+}

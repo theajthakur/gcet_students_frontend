@@ -37,30 +37,7 @@ export default function Feeds() {
   const [posts, setPosts] = useState([
     {
       user: {
-        adm_no: "24GCEBCS201",
-        name: "Vijay Singh",
-      },
-      post: {
-        id: 2993673,
-        date_uploaded: "24 August",
-        description:
-          "Finding peace at the foot of the mountains—Kedarnath, where the divine meets the majestic. 🕉️✨ #Blessed #Kedarnath",
-      },
-      interaction: {
-        likes: 26,
-        liked: false,
-        comments: [
-          {
-            name: "Sarthak Sharma",
-            adm_no: "24GCEBCS164",
-            date_created: "25 August",
-            comment: "Hello Munna!",
-          },
-        ],
-      },
-    },
-    {
-      user: {
+        sr_no: 1017,
         adm_no: "24GCEBCS201",
         name: "Vijay Singh",
       },
@@ -80,13 +57,14 @@ export default function Feeds() {
             name: "Sarthak Sharma",
             adm_no: "24GCEBCS164",
             date_created: "25 August",
-            comment: "Hello Munna!",
+            comment: "Awesome!!!",
           },
         ],
       },
     },
     {
       user: {
+        sr_no: 929,
         adm_no: "24GCEBCS164",
         name: "Sarthak Sharma",
       },
@@ -95,7 +73,7 @@ export default function Feeds() {
         thumbnail:
           "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/fc/f0/goa.jpg?w=1200&h=1400&s=1",
         date_uploaded: "29 August",
-        description: "Goa wale beech pe #masti #lifestyle",
+        description: "Spending holidays in ITALY 🎌 #masti #lifestyle",
       },
       interaction: {
         likes: 862,
@@ -177,7 +155,7 @@ export default function Feeds() {
             {posts.map((post) => (
               <div
                 key={post.post.id}
-                className="post-container bg-light rounded-2 py-2 mb-3"
+                className="post-container rounded-2 py-2 mb-3"
               >
                 <div className="post-header">
                   <div className="user-detail px-3">
@@ -199,7 +177,7 @@ export default function Feeds() {
                       <div>
                         <p className="username m-0">
                           <Link
-                            to={`http://localhost:3000/search/${post.user.adm_no}`}
+                            to={`http://localhost:3000/search/${post.user.sr_no}`}
                           >
                             {post.user.name}
                           </Link>
@@ -278,7 +256,7 @@ export default function Feeds() {
                     <div className="user-dp me-3" style={{ width: "30px" }}>
                       <img
                         alt="Commentator DP"
-                        width="100%"
+                        width="30px"
                         style={{ borderRadius: "50%" }}
                         src={`http://localhost:8000/static/profile/picture/${comment.adm_no}?w=100&h=100`}
                       />
@@ -289,7 +267,18 @@ export default function Feeds() {
                       <p className="m-0 small opacity-50">Reply</p>
                     </div>
                     <div className="meta-data ms-auto small opacity-50">
-                      <p className="m-0">{comment.date_created}</p>
+                      <p
+                        className="m-0 small"
+                        style={{
+                          whiteSpace: "nowrap",
+                          maxWidth: "50px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                        title={comment.date_created}
+                      >
+                        {comment.date_created}
+                      </p>
                     </div>
                   </div>
                 </div>

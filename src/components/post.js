@@ -38,7 +38,7 @@ export default function Post({ onPostData }) {
 
   return (
     <>
-      <form onSubmit={publishPost} className="post-publisher mb-3 p-1 bg-light">
+      <form onSubmit={publishPost} className="post-publisher mb-3 p-1 bg-white">
         <div className="post-textarea-container">
           <textarea
             name="caption"

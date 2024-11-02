@@ -33,7 +33,7 @@ export default function Search() {
     <div className="container-fluid ">
       <div className="row h-minus-nav">
         <div className="col-md-4 col-xl-3 h-100">
-          <div className="p-2 bg-light h-100 side-container">
+          <div className="p-2 bg-white h-100 side-container">
             <form className="form-search m-0" onSubmit={userSearch}>
               <input
                 autoComplete="off"

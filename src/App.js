@@ -20,6 +20,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+import "./Anime.css";
 
 const App = () => {
   const auth = useAuth();
